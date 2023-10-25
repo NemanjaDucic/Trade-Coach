@@ -3,12 +3,11 @@ package com.magma.tradecoach.utilities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import com.magma.tradecoach.BaseApplication
 
-class PrefSingleton() {
-
-    private lateinit var mContext: Context
-    private lateinit var mMyPreferences: SharedPreferences
+class PrefSingleton {
+    private var preferences: SharedPreferences =
+        BaseApplication.applicationContext().getSharedPreferences("main", Context.MODE_PRIVATE)
 
     companion object {
         @SuppressLint("StaticFieldLeak")
@@ -16,45 +15,37 @@ class PrefSingleton() {
 
         @JvmStatic
         fun getInstance(): PrefSingleton {
-            if (instance == null) {
-                instance = PrefSingleton()
-            }
-            return instance!!
+            return instance ?: PrefSingleton()
         }
     }
 
-    fun initialize(ctxt: Context) {
-        mContext = ctxt
-        mMyPreferences = PreferenceManager.getDefaultSharedPreferences(mContext)
-    }
-
     fun saveString(key: String, value: String) {
-        val e = mMyPreferences.edit()
+        val e = preferences.edit()
         e.putString(key, value)
         e.apply()
     }
 
     fun getString(key: String): String {
-        return mMyPreferences.getString(key, "") ?: ""
+        return preferences.getString(key, "") ?: ""
     }
 
     fun saveInt(key: String, value: Int) {
-        val e = mMyPreferences.edit()
+        val e = preferences.edit()
         e.putInt(key, value)
         e.apply()
     }
 
     fun getInt(key: String): Int {
-        return mMyPreferences.getInt(key, 0)
+        return preferences.getInt(key, 0)
     }
 
     fun saveBool(key: String, value: Boolean) {
-        val e = mMyPreferences.edit()
+        val e = preferences.edit()
         e.putBoolean(key, value)
         e.apply()
     }
 
     fun getBool(key: String): Boolean {
-        return mMyPreferences.getBoolean(key, false)
+        return preferences.getBoolean(key, false)
     }
 }
