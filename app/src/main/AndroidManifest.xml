@@ -13,14 +13,26 @@
         android:theme="@style/Theme.TradeCoach"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.segmentIntro.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".ui.segmentIntro.LoginActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.segmentIntro.RegisterActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.segmentIntro.GetStartedActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.segmentIntro.WelcomeActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.segmentMain.MainActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.segmentMain.TestActivity"/>
     </application>
 
 </manifest>

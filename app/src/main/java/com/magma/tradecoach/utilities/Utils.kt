@@ -26,7 +26,11 @@ class Utils(private val context: Context) {
     fun getETText(editText: EditText): String {
         return editText.text.toString().trim { it <= ' ' }
     }
-
+    fun intent(context: Context, c: Class<*>?, bundle: Bundle?) {
+        val intent = Intent(context, c)
+        if (bundle != null) intent.putExtras(bundle)
+        context.startActivity(intent)
+    }
     fun getTVText(textView: TextView): String {
         return textView.text.toString().trim { it <= ' ' }
     }

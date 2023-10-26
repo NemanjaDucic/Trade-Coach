@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "642410894337",
+    "firebase_url": "https://trade-coach-default-rtdb.firebaseio.com",
+    "project_id": "trade-coach",
+    "storage_bucket": "trade-coach.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642410894337:android:d9574e0354a3e59278dc00",
+        "android_client_info": {
+          "package_name": "com.magma.tradecoach"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdjtIgv7y2mpD-YsJB22nj4gpx2RomOsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
