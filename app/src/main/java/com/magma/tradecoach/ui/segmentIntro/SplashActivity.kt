@@ -34,7 +34,7 @@ class SplashActivity:AppCompatActivity() {
                 utils.intent(this,GetStartedActivity::class.java,null)
             }
 
-        }, 1000) // 1500 milliseconds (1.5 seconds)
+        }, 1000)
     }
 
 }
