@@ -1,8 +1,11 @@
 package com.magma.tradecoach.model
 
+import com.google.gson.annotations.SerializedName
+
 data class MarketCoinModel(
     val ath: Double,
-    val ath_change_percentage: Double,
+    @SerializedName("ath_change_percentage")
+    val athChangePercentage: Double,
     val ath_date: String,
     val atl: Double,
     val atl_change_percentage: Double,

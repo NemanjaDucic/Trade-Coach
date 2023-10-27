@@ -23,6 +23,5 @@ class BaseApplication: Application() {
         super.onCreate()
         FirebaseApp.initializeApp(this)
         PrefSingleton()
-
     }
 }

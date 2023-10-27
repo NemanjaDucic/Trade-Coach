@@ -3,6 +3,7 @@ package com.magma.tradecoach.ui.segmentIntro
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.magma.tradecoach.ui.segmentMain.MainActivity
@@ -25,11 +26,9 @@ class SplashActivity:AppCompatActivity() {
         startActivity()
     }
     private fun startActivity(){
-
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             if (PrefSingleton.getInstance().isLogged()){
                 utils.intent(this, MainActivity::class.java,null)
-
             } else {
                 utils.intent(this,GetStartedActivity::class.java,null)
             }

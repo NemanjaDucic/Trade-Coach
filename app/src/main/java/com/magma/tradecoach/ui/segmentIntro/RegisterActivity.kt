@@ -27,6 +27,8 @@ class RegisterActivity:AppCompatActivity() {
         }
         binding.loginTV.setOnClickListener {
             onBackPressed()
+            //Mislim da je bolje da se koristi ovo dole, onBackPressed je deprecated
+            //super.onBackPressedDispatcher
         }
         binding.countyCodePicker.setShowPhoneCode(false)
         binding.countyCodePicker.setCcpDialogShowPhoneCode(false)

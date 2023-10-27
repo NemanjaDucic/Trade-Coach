@@ -5,8 +5,9 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class CoinsRepository @Inject constructor(val api: InfoApi) {
-    private val apikey = "CG-ZxGvPrXmY2Yc6WeFh4aAK2cP"
+class CoinsRepository @Inject constructor(private val api: InfoApi) {
+    //apiKey i sve hardodovane values da se prebace u Constants
+    private val apiKey = "CG-ZxGvPrXmY2Yc6WeFh4aAK2cP"
     private val currency = "usd"
     private var cachedData: List<MarketCoinModel>? = null
     private var isDataFetched = false
@@ -14,7 +15,7 @@ class CoinsRepository @Inject constructor(val api: InfoApi) {
     suspend fun getResults(): Result<List<MarketCoinModel>> {
         if (!isDataFetched) {
             val response = try {
-                api.coinListing(apikey, currency)
+                api.coinListing(apiKey, currency)
             } catch (e: IOException) {
                 return Result.failure(e)
             } catch (e: HttpException) {
