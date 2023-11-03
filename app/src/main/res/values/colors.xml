@@ -15,5 +15,7 @@
     <color name="silver">#C0C0C0</color>
     <color name="darkGray">#5A5A5A</color>
     <color name="etBackground">#1c1138</color>
+    <color name="gradiantBstart">#1A55FA</color>
+    <color name="gradiantBend">#0341ED</color>
 
 </resources>

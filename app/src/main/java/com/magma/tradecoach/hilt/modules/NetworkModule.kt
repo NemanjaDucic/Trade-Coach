@@ -1,6 +1,6 @@
 package com.magma.tradecoach.hilt.modules
 
-import com.magma.tradecoach.networking.InfoApi
+import com.magma.tradecoach.networking.CoinMarketApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,8 +24,8 @@ class NetworkModule {
     }
     @Singleton
     @Provides
-    fun providesApi(retrofit: Retrofit):InfoApi{
-        return retrofit.create(InfoApi::class.java)
+    fun providesApi(retrofit: Retrofit):CoinMarketApi{
+        return retrofit.create(CoinMarketApi::class.java)
     }
 
 }

@@ -5,7 +5,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class CoinsRepository @Inject constructor(val api: InfoApi) {
+class CoinsRepository @Inject constructor(val api: CoinMarketApi) {
     private val apikey = "CG-ZxGvPrXmY2Yc6WeFh4aAK2cP"
     private val currency = "usd"
     private var cachedData: List<MarketCoinModel>? = null

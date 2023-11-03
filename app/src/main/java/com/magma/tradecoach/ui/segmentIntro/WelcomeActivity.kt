@@ -25,7 +25,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.btNextWelcome.setOnClickListener {
             if (binding.viewPagerWelcome.currentItem == 2)
-              Utils(this).intent(this, RegisterActivity::class.java,null)
+              Utils.intent(this, RegisterActivity::class.java,null)
             else binding.viewPagerWelcome.currentItem = binding.viewPagerWelcome.currentItem + 1
         }
 

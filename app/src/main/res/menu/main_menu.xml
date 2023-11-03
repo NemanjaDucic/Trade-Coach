@@ -1,0 +1,25 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/home_ico"
+        android:title="Home"
+        android:checked="true"
+        android:color="@color/gradiantBstart"/>
+
+    <item
+        android:id="@+id/community"
+        android:icon="@drawable/community_ico"
+        android:title="Community"
+        android:color="@color/gradiantBstart"/>
+    <item
+        android:id="@+id/currencies"
+        android:icon="@drawable/cachebag_ico"
+        android:title="Currencies"
+        android:color="@color/gradiantBstart"/>
+    <item
+        android:id="@+id/dedication"
+        android:icon="@drawable/stock_ico"
+        android:title="Dedication"
+
+        android:color="@color/gradiantBstart"/>
+</menu>

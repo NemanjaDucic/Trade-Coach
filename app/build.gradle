@@ -89,6 +89,10 @@ dependencies {
     //CountryPicker
     implementation 'com.hbb20:ccp:2.5.1'
 
+    //BubbleTab
+    implementation  'io.ak1:bubbletabbar:1.0.8'
+
+
 }
 kapt {
     correctErrorTypes true

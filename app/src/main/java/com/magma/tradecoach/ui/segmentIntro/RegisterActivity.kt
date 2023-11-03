@@ -13,7 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RegisterActivity:AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityRegisterBinding
-    private val utils = Utils(this)
+    private val utils = Utils
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
