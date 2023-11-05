@@ -23,11 +23,10 @@ class SplashActivity:AppCompatActivity() {
         startActivity()
     }
     private fun startActivity(){
-
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             if (PrefSingleton.getInstance().isLogged()){
-                Utils.intent(this, MainActivity::class.java,null)
 
+                utils.intent(this, MainActivity::class.java,null)
             } else {
                 Utils.intent(this,GetStartedActivity::class.java,null)
             }
