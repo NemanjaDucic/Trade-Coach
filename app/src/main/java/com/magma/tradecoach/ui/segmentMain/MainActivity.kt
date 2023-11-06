@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.google.gson.Gson
 import com.magma.tradecoach.R
 import com.magma.tradecoach.databinding.ActivityMainBinding
 import com.magma.tradecoach.model.MarketCoinModel
@@ -12,6 +13,7 @@ import com.magma.tradecoach.ui.fragments.community.CommunityFragment
 import com.magma.tradecoach.ui.fragments.currencies.CurrenciesFragment
 import com.magma.tradecoach.ui.fragments.dedication.DedicationFragment
 import com.magma.tradecoach.ui.fragments.home.HomeFragment
+import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,8 +36,7 @@ class MainActivity : AppCompatActivity() {
             value->
             updateUIWithData(value)
         }
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, HomeFragment()).commit()
+
         binding.bubbleTabBar.addBubbleListener { id ->
             var selectedFragment: Fragment? = null
             when (id) {
@@ -61,15 +62,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUIWithData(data: List<MarketCoinModel>) {
-        println(data)
+        val gson = Gson()
+        val json = gson.toJson(data)
+        val arguments = Bundle()
+       arguments.putString("key",json)
+        HomeFragment().arguments = arguments
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, HomeFragment())
+            .commit()
     }
 
-   private  fun addFragment(fragment: Fragment) {
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragmentContainer, fragment)
-        transaction.addToBackStack("")
-        transaction.commit()
-    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         supportFragmentManager.popBackStack()

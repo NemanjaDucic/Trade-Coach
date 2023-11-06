@@ -6,7 +6,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class CoinsRepository @Inject constructor(val api: CoinMarketApi) {
-    constant val apikey = "CG-ZxGvPrXmY2Yc6WeFh4aAK2cP"
+     val apikey = "CG-ZxGvPrXmY2Yc6WeFh4aAK2cP"
 
 
     private val currency = "usd"
@@ -16,7 +16,7 @@ class CoinsRepository @Inject constructor(val api: CoinMarketApi) {
     suspend fun getResults(): Result<List<MarketCoinModel>> {
         if (!isDataFetched) {
             val response = try {
-                api.coinListing(apiKey, currency)
+                api.coinListing(apikey, currency)
             } catch (e: IOException) {
                 return Result.failure(e)
             } catch (e: HttpException) {

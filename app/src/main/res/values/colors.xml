@@ -17,5 +17,6 @@
     <color name="etBackground">#1c1138</color>
     <color name="gradiantBstart">#1A55FA</color>
     <color name="gradiantBend">#0341ED</color>
-
+    <color name="newColor">#1AD9D9D9</color>
+    <color name="colorViewTop">#26D9D9D9</color>
 </resources>
