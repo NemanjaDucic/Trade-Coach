@@ -31,4 +31,3 @@ data class MarketCoinModel(
     val total_supply: Double,
     val total_volume: Double
 )
-

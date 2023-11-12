@@ -3,8 +3,8 @@ package com.magma.tradecoach.ui.segmentIntro
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.magma.tradecoach.adapters.WelcomePagerAdapter
 import com.magma.tradecoach.databinding.ActivityWelcomeBinding
-import com.magma.tradecoach.model.WelcomePagerAdapter
 import com.magma.tradecoach.utilities.Utils
 
 class WelcomeActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.btNextWelcome.setOnClickListener {
             if (binding.viewPagerWelcome.currentItem == 2)
-              Utils(this).intent(this, RegisterActivity::class.java,null)
+              Utils.intent(this, RegisterActivity::class.java,null)
             else binding.viewPagerWelcome.currentItem = binding.viewPagerWelcome.currentItem + 1
         }
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/flag_serbia"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/consSendMessage"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_12sdp"
+        android:backgroundTint="#1E2A33"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageView
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:scaleType="fitXY"
+            android:layout_height="0dp"
+            android:src="@drawable/send_ico"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/messageedittext"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <EditText
+
+            android:id="@+id/messageedittext"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.8"
+            android:layout_height="0dp"
+            android:hint="Write message"
+            android:padding="10dp"
+            android:textColorHint="@color/gradiantTop"
+            android:background="@drawable/edit_text_outline"
+            android:inputType="textMultiLine"
+            android:textColor="@color/white"
+            android:fontFamily="@font/interregular"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

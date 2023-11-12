@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/feed"
+        android:icon="@drawable/feed_ico"
+        android:title="Feed"
+        android:checked="true"
+        android:color="@color/gradiantBstart"/>
+
+    <item
+        android:id="@+id/lBoard"
+        android:icon="@drawable/lboard_ico"
+        android:title="Leaderboard"
+        android:color="@color/gradiantBstart"/>
+    <item
+        android:id="@+id/chat"
+        android:icon="@drawable/chat_ico"
+        android:title="Chat"
+        android:color="@color/gradiantBstart"/>
+
+</menu>

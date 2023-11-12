@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/leaderboardRV"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLeft"
+        android:layout_marginTop="20dp"
+        android:layout_height="0dp"/>
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        android:lines="2"
+        android:paddingTop="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rank_tree_outline"
+        android:text="1000 \n username"
+        android:textAlignment="center"
+        android:id="@+id/tvLeft"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="45dp"
+        android:paddingTop="3dp"
+        android:lines="2"
+        app:layout_constraintStart_toEndOf="@id/tvLeft"
+        app:layout_constraintEnd_toStartOf="@id/tvRight"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rank_outline"
+        android:text="1000 \n username"
+        android:id="@+id/tvMid"
+        android:layout_marginTop="40dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="100dp"
+        android:paddingTop="3dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rank_two_outline"
+        android:text="1000 \n username"
+        android:lines="2"
+        android:id="@+id/tvRight"
+        android:layout_marginTop="60dp"
+        android:textAlignment="center"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/white"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

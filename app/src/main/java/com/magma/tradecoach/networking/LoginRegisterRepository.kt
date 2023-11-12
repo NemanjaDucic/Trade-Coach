@@ -64,13 +64,13 @@ suspend fun register(username: String, country: String, email: String, password:
 
             true
         } else {
-            Utils(c).displayToast("Registration Failed")
+            Utils.displayToast("Registration Failed")
             println(result)
             false
         }
     } catch (e: Exception) {
         println(e)
-        Utils(c).displayToast("Registration Failed")
+        Utils.displayToast("Registration Failed")
         false
     }
 }

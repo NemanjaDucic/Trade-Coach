@@ -3,7 +3,6 @@ package com.magma.tradecoach.utilities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.magma.tradecoach.BaseApplication
 
 class PrefSingleton {
