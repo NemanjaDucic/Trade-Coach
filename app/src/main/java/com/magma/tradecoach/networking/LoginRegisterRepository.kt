@@ -28,11 +28,12 @@ class LoginRegisterRepository @Inject constructor() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        cont.resume(Result.success(auth.currentUser!!))
-                        singleton.getInstance().saveBool(Constants.LOGGED_KEY,true)
-                        val intent = Intent(c, MainActivity::class.java)
-                        c.startActivity(intent)
-
+                        auth.currentUser?.let { firebaseUser ->
+                            cont.resume(Result.success(firebaseUser))
+                            singleton.getInstance().saveBool(Constants.LOGGED_KEY,true)
+                            val intent = Intent(c, MainActivity::class.java)
+                            c.startActivity(intent)
+                        }
                     } else {
                         cont.resume(Result.failure(Throwable(it.exception)))
                     }
@@ -55,7 +56,6 @@ suspend fun register(username: String, country: String, email: String, password:
 
         if (result.user != null) {
             val uid = result.user?.uid
-            println(uid)
             val user = UserDataModel(username, uid, email, country, 100.0)
             uid?.let { reference.child(it).setValue(user) }
             singleton.getInstance().saveBool(Constants.LOGGED_KEY, true)
