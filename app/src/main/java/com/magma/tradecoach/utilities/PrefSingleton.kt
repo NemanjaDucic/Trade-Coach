@@ -10,13 +10,12 @@ class PrefSingleton {
         BaseApplication.applicationContext().getSharedPreferences("main", Context.MODE_PRIVATE)
 
     companion object {
-        @SuppressLint("StaticFieldLeak")
-        private var instance: PrefSingleton? = null
+        private const val DEFAULT_INT_VALUE = 0
+        private const val DEFAULT_STRING_VALUE = ""
 
         @JvmStatic
-        fun getInstance(): PrefSingleton {
-            return instance ?: PrefSingleton()
-        }
+        val instance: PrefSingleton by lazy { PrefSingleton() }
+
     }
 
     fun saveString(key: String, value: String) {

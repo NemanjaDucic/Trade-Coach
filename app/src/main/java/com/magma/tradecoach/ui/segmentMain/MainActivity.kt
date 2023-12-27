@@ -2,6 +2,7 @@ package com.magma.tradecoach.ui.segmentMain
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -13,6 +14,7 @@ import com.magma.tradecoach.ui.fragments.community.CommunityFragment
 import com.magma.tradecoach.ui.fragments.currencies.CurrenciesFragment
 import com.magma.tradecoach.ui.fragments.dedication.DedicationFragment
 import com.magma.tradecoach.ui.fragments.home.HomeFragment
+import com.magma.tradecoach.utilities.ConsecutiveDayChecker
 import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         init()
 
-
     }
     private fun init(){
         viewModel.getCoins()
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             value->
             updateUIWithData(value)
         }
-
+        ConsecutiveDayChecker(this).onUserLogin()
         binding.bubbleTabBar.addBubbleListener { id ->
             var selectedFragment: Fragment? = null
             when (id) {
@@ -58,7 +59,10 @@ class MainActivity : AppCompatActivity() {
             if (selectedFragment != null) supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, selectedFragment).commit()
         }
+        this.onBackPressedDispatcher.addCallback(this) {
+            supportFragmentManager.popBackStack()
 
+        }
     }
 
     private fun updateUIWithData(data: List<MarketCoinModel>) {
@@ -70,19 +74,5 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, HomeFragment())
             .commit()
-    }
-
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        supportFragmentManager.popBackStack()
-        }
-
-
-    fun displayFragment(fragment: Fragment) {
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragmentContainer, fragment)
-        transaction.addToBackStack("")
-        transaction.commit()
     }
 }

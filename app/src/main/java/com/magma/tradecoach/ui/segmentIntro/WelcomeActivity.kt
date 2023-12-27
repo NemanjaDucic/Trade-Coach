@@ -9,7 +9,6 @@ import com.magma.tradecoach.utilities.Utils
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
@@ -29,7 +28,6 @@ class WelcomeActivity : AppCompatActivity() {
             else binding.viewPagerWelcome.currentItem = binding.viewPagerWelcome.currentItem + 1
         }
 
-        //Za sta nam ovo sluzi? Za neku buducu upotrebu ili?
         binding.viewPagerWelcome.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(

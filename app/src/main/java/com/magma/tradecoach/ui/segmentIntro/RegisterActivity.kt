@@ -1,6 +1,7 @@
 package com.magma.tradecoach.ui.segmentIntro
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.magma.tradecoach.databinding.ActivityLoginBinding
@@ -14,10 +15,16 @@ class RegisterActivity:AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityRegisterBinding
     private val utils = Utils
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            finish()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        onBackPressedDispatcher.addCallback(this, callback)
         listeners()
     }
 
@@ -26,9 +33,7 @@ class RegisterActivity:AppCompatActivity() {
             viewModel.register(utils.getETText(binding.usernameET),utils.getETText(binding.countryET),utils.getETText(binding.emailET),utils.getETText(binding.passwordET),this)
         }
         binding.loginTV.setOnClickListener {
-            onBackPressed()
-            //Mislim da je bolje da se koristi ovo dole, onBackPressed je deprecated
-            //super.onBackPressedDispatcher
+            callback.handleOnBackPressed()
         }
         binding.countyCodePicker.setShowPhoneCode(false)
         binding.countyCodePicker.setCcpDialogShowPhoneCode(false)

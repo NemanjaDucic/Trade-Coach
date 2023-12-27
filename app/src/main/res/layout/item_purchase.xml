@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rect_bg"
+    android:padding="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<TextView
+    android:layout_marginTop="10dp"
+    android:textColor="@color/white"
+    android:textSize="18sp"
+    android:fontFamily="@font/interregular"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:text="@string/home"
+    android:textAlignment="center"
+    android:id="@+id/name_text_view"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/name_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintWidth_percent="0.8"
+        android:src="@drawable/rect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_text_view"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/name_button"
+        android:layout_width="0dp"
+        app:layout_constraintWidth_percent="0.8"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"
+        android:text="Button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name_image_view"
+       android:background="@drawable/button"/>
+<ImageView
+    android:layout_width="0dp"
+    android:layout_height="15dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/name_button"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

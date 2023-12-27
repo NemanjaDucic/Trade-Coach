@@ -23,15 +23,17 @@ class SplashActivity:AppCompatActivity() {
         setContentView(binding.root)
         startActivity()
     }
-    private fun startActivity(){
+    private fun startActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
-            if (PrefSingleton.getInstance().isLogged()){
+            val isLogged = PrefSingleton.instance?.isLogged() ?: false
 
-                Utils.intent(this, MainActivity::class.java,null)
+            val targetActivity = if (isLogged) {
+                MainActivity::class.java
             } else {
-                Utils.intent(this,GetStartedActivity::class.java,null)
+                GetStartedActivity::class.java
             }
 
+            Utils.intent(this, targetActivity, null)
         }, 1000)
     }
 

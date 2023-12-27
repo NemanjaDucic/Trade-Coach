@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.magma.tradecoach.model.MarketCoinModel
 import com.magma.tradecoach.networking.CoinsRepository
 import com.magma.tradecoach.networking.LoginRegisterRepository
+import com.magma.tradecoach.utilities.DatabaseProvider
+import com.magma.tradecoach.utilities.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val loginRegisterRepository: LoginRegisterRepository,
-private val coinsRepository: CoinsRepository): ViewModel(){
+private val coinsRepository: CoinsRepository,
+                                        private val  databaseRepository:DatabaseProvider
+): ViewModel(){
     //Login Data
     private var _loginLiveData = MutableLiveData<FirebaseUser?>()
     var loginLiveData = _loginLiveData as LiveData<FirebaseUser?>
@@ -56,6 +60,13 @@ private val coinsRepository: CoinsRepository): ViewModel(){
            { throwable ->
                 throwable.printStackTrace()
             })
+        }
+    }
+
+    fun getUserData(){
+        viewModelScope.launch {
+                databaseRepository.getUser()
+
         }
     }
 }

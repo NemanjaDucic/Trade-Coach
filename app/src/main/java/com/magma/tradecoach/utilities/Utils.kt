@@ -9,9 +9,14 @@ import android.os.*
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.magma.tradecoach.R
+import io.ak1.BubbleTabBar
+import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("StaticFieldLeak")
@@ -70,7 +75,20 @@ object Utils {
     fun displayToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+    fun getCurrentDateTime(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val currentDate = Date()
+        return dateFormat.format(currentDate)
+    }
+    fun setFragment(activity: FragmentActivity, fragment: Fragment, position: Int) {
+        val transaction = activity.supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainer, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
 
+        val tabLayout = activity.findViewById<BubbleTabBar>(R.id.bubbleTabBar)
+        tabLayout.setSelected(position)
+    }
     fun setRecycler(recycler: RecyclerView, adapter: RecyclerView.Adapter<*>) {
         val layoutManager = GridLayoutManager(context, 1)
         recycler.setHasFixedSize(true)
