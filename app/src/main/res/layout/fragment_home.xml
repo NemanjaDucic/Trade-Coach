@@ -14,7 +14,7 @@
         android:textColor="@color/white"
         android:textSize="26sp"
         android:textAlignment="center"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/_16sdp"
         android:text="@string/home"/>
     <ImageView
         android:src="@drawable/coin_logo_large"
@@ -30,11 +30,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/piggie"
-        android:layout_margin="28dp"/>
+        android:layout_margin="@dimen/_24sdp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_margin="25dp"
+        android:layout_margin="@dimen/_20sdp"
         android:id="@+id/lastVisitCons"
         android:layout_height="0dp"
         app:layout_constraintVertical_chainStyle="packed"
@@ -64,7 +64,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/topRecyclerView"
-            android:layout_margin="5dp"
+            android:layout_margin="@dimen/_5sdp"
             app:layout_constraintTop_toBottomOf="@id/visitTV"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,7 +82,7 @@
             app:layout_constraintHeight_percent="0.7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="25dp"
+            android:layout_marginStart="@dimen/_20sdp"
             android:background="@drawable/rect_bck"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintWidth_percent="0.4"
@@ -90,7 +90,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/gift_ico"
                 android:id="@+id/giftImg"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,7 +102,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/giftImg"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:text="Get Bonus"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -114,12 +114,12 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_marginEnd="@dimen/_8sdp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="@dimen/_20sdp"
             app:layout_constraintHeight_percent="0.7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -130,7 +130,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/check_ico"
                 android:id="@+id/checkImg"
                 app:layout_constraintStart_toStartOf="parent"
@@ -142,7 +142,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/checkImg"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="@dimen/_5sdp"
                 android:text="Check in"
                 android:textColor="@color/white"
                 android:textSize="14sp"
@@ -160,12 +160,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="8dp"
+        android:padding="@dimen/_6sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/consJar"
         android:background="@drawable/top_home_background"
-        android:layout_margin="25dp"
+        android:layout_margin="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/consButtons"
         app:layout_constraintHeight_percent="0.2">
@@ -181,7 +181,7 @@
             android:id="@+id/investTV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/_8sdp"
             app:layout_constraintStart_toEndOf="@id/jarImg"
             app:layout_constraintTop_toTopOf="parent
 "            app:layout_constraintEnd_toEndOf="parent"
@@ -196,7 +196,7 @@
             app:layout_constraintStart_toEndOf="@id/premiumButton"
             app:layout_constraintTop_toBottomOf="@id/investTV"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:src="@drawable/invest_image"/>
         <ImageView
             android:layout_width="0dp"
@@ -204,7 +204,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/premium_button"
             android:id="@+id/premiumButton"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/_8sdp"
             app:layout_constraintStart_toEndOf="@id/jarImg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/investTV"/>

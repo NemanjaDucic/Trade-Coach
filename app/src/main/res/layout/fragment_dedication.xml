@@ -13,6 +13,6 @@
         android:textColor="@color/white"
         android:textSize="26sp"
         android:textAlignment="center"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/_16sdp"
         android:text="@string/dedication"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

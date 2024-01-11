@@ -13,6 +13,6 @@
         android:textColor="@color/white"
         android:textSize="26sp"
         android:textAlignment="center"
-        android:layout_margin="24dp"
+        android:layout_margin="@dimen/_21sdp"
         android:text="@string/currencies"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

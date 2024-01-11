@@ -10,7 +10,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginBottom="100dp"
+    android:layout_marginBottom="@dimen/_78sdp"
     app:layout_constraintBottom_toBottomOf="parent"
     android:src="@drawable/logomark"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
