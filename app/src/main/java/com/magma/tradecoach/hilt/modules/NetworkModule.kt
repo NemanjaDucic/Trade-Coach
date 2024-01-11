@@ -27,5 +27,4 @@ class NetworkModule {
     fun providesApi(retrofit: Retrofit):CoinMarketApi{
         return retrofit.create(CoinMarketApi::class.java)
     }
-
 }

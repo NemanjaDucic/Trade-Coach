@@ -41,7 +41,6 @@ private val coinsRepository: CoinsRepository,
                     _loginLiveData.postValue(null)
                 }
         }
-
     }
 
     fun register(username:String,country:String,email: String, password: String,c:Context) {
@@ -51,15 +50,14 @@ private val coinsRepository: CoinsRepository,
             )
         }
     }
-    fun getCoins(){
-
+    fun getCoins() {
         viewModelScope.launch {
-        coinsRepository.getResults().fold(  { result ->
-            _initialCurrencyListLiveData.postValue(result)
-        },
-           { throwable ->
-                throwable.printStackTrace()
-            })
+            coinsRepository.getResults().fold({ result ->
+                _initialCurrencyListLiveData.postValue(result)
+            },
+                { throwable ->
+                    throwable.printStackTrace()
+                })
         }
     }
 
