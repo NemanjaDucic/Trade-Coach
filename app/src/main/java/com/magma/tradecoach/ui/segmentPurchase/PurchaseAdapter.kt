@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.magma.tradecoach.R
 import com.magma.tradecoach.model.PurchaseModel
 import com.magma.tradecoach.model.TopicModel
+import com.magma.tradecoach.utilities.Constants
 
 class PurchaseAdapter  (
     var items :ArrayList<PurchaseModel>
@@ -28,7 +29,7 @@ class PurchaseAdapter  (
     }
 
     override fun getItemCount(): Int {
-        return 6
+        return Constants.PURCHASE_ITEM_COUNT
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {

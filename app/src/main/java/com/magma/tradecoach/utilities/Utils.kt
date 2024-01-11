@@ -5,8 +5,13 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.*
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -95,7 +100,27 @@ object Utils {
         recycler.layoutManager = layoutManager
         recycler.adapter = adapter
     }
+     fun setAvatarInitials(username: String, imageView: ImageView) {
+        val safeUsername = if (username.length > 2) username else "Tesla Coiner"
+        val b = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
+        val c = Canvas(b)
+        c.drawColor(Color.parseColor("#313131"))
+        val paint = Paint()
+        paint.textSize = 46f
+        paint.color = Color.parseColor("#FFDC64")
+        c.drawText(safeUsername.substring(0, 2).uppercase(Locale.getDefault()), 22f, 65f, paint)
+        imageView.setImageBitmap(b)
+    }
 
+     fun splitTime(time: String): String {
+        return try {
+            val split = time.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+            split[1]
+        } catch (e: Exception) {
+            " "
+        }
+    }
     fun setRecyclerHorizontal(recycler: RecyclerView, adapter: RecyclerView.Adapter<*>) {
         val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         recycler.setHasFixedSize(true)

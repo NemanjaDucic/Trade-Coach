@@ -19,16 +19,12 @@ class CurrenciesFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCurrenciesBinding.inflate(inflater)
-
         init()
         return binding.root
     }
-
     private fun  init(){
         requireActivity().onBackPressedDispatcher.addCallback(this) {
-
            Utils.setFragment(requireActivity(),HomeFragment(),0)
-
         }
     }
 }

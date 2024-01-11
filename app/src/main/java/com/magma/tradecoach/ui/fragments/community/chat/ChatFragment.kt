@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.magma.tradecoach.databinding.FragmentChatBinding
+import com.magma.tradecoach.di.observe
 import com.magma.tradecoach.model.ChatMessage
 import com.magma.tradecoach.utilities.BaseFragment
 import com.magma.tradecoach.utilities.DatabaseProvider
@@ -83,7 +84,4 @@ class ChatFragment: BaseFragment() {
             override fun afterTextChanged(s: Editable) {}
         })
     }
-}
-fun<T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T) -> Unit) {
-    liveData.observe(this, Observer(body))
 }

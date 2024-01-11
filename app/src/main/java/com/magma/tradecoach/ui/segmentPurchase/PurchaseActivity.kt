@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.magma.tradecoach.databinding.ActivityPuchaseBinding
+import com.magma.tradecoach.utilities.Constants
 
 class PurchaseActivity:AppCompatActivity() {
     private lateinit var binding: ActivityPuchaseBinding
@@ -21,6 +22,6 @@ class PurchaseActivity:AppCompatActivity() {
     private fun init(){
         adapter = PurchaseAdapter(arrayListOf())
         binding.purchaseRecyclerView.adapter = adapter
-        binding.purchaseRecyclerView.layoutManager = GridLayoutManager(this,3)
+        binding.purchaseRecyclerView.layoutManager = GridLayoutManager(this,Constants.PURCHASE_GRID_COUNT)
     }
 }

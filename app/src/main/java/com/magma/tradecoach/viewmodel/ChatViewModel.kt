@@ -20,7 +20,9 @@ import com.magma.tradecoach.BaseApplication.Companion.applicationContext
 import com.magma.tradecoach.R
 import com.magma.tradecoach.model.ChatMessage
 import com.magma.tradecoach.ui.fragments.community.chat.ChatViewHolder
+import com.magma.tradecoach.utilities.Constants
 import com.magma.tradecoach.utilities.PrefSingleton
+import com.magma.tradecoach.utilities.Utils
 import java.util.*
 
 class ChatViewModel: ViewModel() {
@@ -32,7 +34,7 @@ class ChatViewModel: ViewModel() {
     private val options: FirebaseRecyclerOptions<ChatMessage>
 
     init {
-        val query = FirebaseDatabase.getInstance().reference.child("chat").limitToLast(50)
+        val query = FirebaseDatabase.getInstance().reference.child("chat").limitToLast(Constants.CHAT_LIMIT)
         options = FirebaseRecyclerOptions.Builder<ChatMessage>()
             .setQuery(query, ChatMessage::class.java)
             .build()
@@ -55,10 +57,10 @@ class ChatViewModel: ViewModel() {
                 model: ChatMessage
             ) {
                 val messageText = model.text
-                val messageTime = model.time?.let { splitTime(it) }
+                val messageTime = model.time?.let { Utils.splitTime(it) }
                 val messageSenderID = model.sender
                 val messageSenderName = model.senderName
-                if (messageSenderID == PrefSingleton.instance?.getString("id")) {
+                if (messageSenderID == PrefSingleton.instance.getString("id")) {
                     viewHolder.theirMessage.visibility = View.INVISIBLE
                     viewHolder.myMessage.visibility = View.VISIBLE
                     viewHolder.myMessage.background =
@@ -71,7 +73,7 @@ class ChatViewModel: ViewModel() {
                     viewHolder.tvTheirUsername.text = messageSenderName
                     viewHolder.tvTheirText.text = messageText
                     viewHolder.tvTheirTime.text = messageTime
-                    messageSenderName?.let { setAvatarInitials(it, viewHolder.iTheirImage) }
+                    messageSenderName?.let { Utils.setAvatarInitials(it, viewHolder.iTheirImage) }
                 }
             }
 
@@ -84,25 +86,5 @@ class ChatViewModel: ViewModel() {
         observeAdapter.value = adapter!!
     }
 
-    private fun setAvatarInitials(username: String, imageView: ImageView) {
-        val safeUsername = if (username.length > 2) username else "Tesla Coiner"
-        val b = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
-        val c = Canvas(b)
-        c.drawColor(Color.parseColor("#313131"))
-        val paint = Paint()
-        paint.textSize = 46f
-        paint.color = Color.parseColor("#FFDC64")
-        c.drawText(safeUsername.substring(0, 2).uppercase(Locale.getDefault()), 22f, 65f, paint)
-        imageView.setImageBitmap(b)
-    }
 
-    private fun splitTime(time: String): String {
-        return try {
-            val split = time.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
-                .toTypedArray()
-            split[1]
-        } catch (e: Exception) {
-            " "
-        }
-    }
 }
