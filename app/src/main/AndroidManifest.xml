@@ -26,12 +26,15 @@
         <activity android:name=".ui.segmentIntro.LoginActivity"
             android:exported="false"/>
         <activity android:name=".ui.segmentIntro.RegisterActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false"/>
         <activity android:name=".ui.segmentIntro.GetStartedActivity"
             android:exported="false"/>
         <activity android:name=".ui.segmentIntro.WelcomeActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false"/>
         <activity android:name=".ui.segmentMain.MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false"/>
         <activity android:name=".ui.segmentPurchase.PurchaseActivity"
             android:exported="false"/>

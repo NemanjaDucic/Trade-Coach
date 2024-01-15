@@ -33,7 +33,7 @@ class RegisterActivity:AppCompatActivity() {
             viewModel.register(utils.getETText(binding.usernameET),utils.getETText(binding.countryET),utils.getETText(binding.emailET),utils.getETText(binding.passwordET),this)
         }
         binding.loginTV.setOnClickListener {
-            callback.handleOnBackPressed()
+           Utils.intent(this,LoginActivity::class.java,null)
         }
         binding.countyCodePicker.setShowPhoneCode(false)
         binding.countyCodePicker.setCcpDialogShowPhoneCode(false)

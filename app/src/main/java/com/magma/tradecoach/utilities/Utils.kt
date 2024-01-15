@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.magma.tradecoach.R
+import com.magma.tradecoach.model.UserDataModel
 import io.ak1.BubbleTabBar
 import java.text.SimpleDateFormat
 import java.util.*
@@ -110,6 +111,10 @@ object Utils {
         paint.color = Color.parseColor("#FFDC64")
         c.drawText(safeUsername.substring(0, 2).uppercase(Locale.getDefault()), 22f, 65f, paint)
         imageView.setImageBitmap(b)
+    }
+
+    fun isPremiumUser(user:UserDataModel):Boolean{
+        return user.isPremium == true
     }
 
      fun splitTime(time: String): String {

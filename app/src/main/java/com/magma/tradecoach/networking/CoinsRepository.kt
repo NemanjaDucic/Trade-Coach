@@ -6,7 +6,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class CoinsRepository @Inject constructor(val api: CoinMarketApi) {
-     val apiKey = "CG-ZxGvPrXmY2Yc6WeFh4aAK2cP"
+   private  val apiKey = "CG-ZxGvPrXmY2Yc6WeFh4aAK2cP"
 
     private val currency = "usd"
     private var cachedData: List<MarketCoinModel>? = null

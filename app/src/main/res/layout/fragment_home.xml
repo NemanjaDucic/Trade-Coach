@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -17,20 +18,23 @@
         android:layout_margin="@dimen/_16sdp"
         android:text="@string/home"/>
     <ImageView
-        android:src="@drawable/coin_logo_large"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:src="@drawable/mcoin"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
         android:scaleType="fitXY"
         app:layout_constraintStart_toEndOf="@id/titleTV"
         app:layout_constraintTop_toTopOf="@id/titleTV"
         app:layout_constraintBottom_toBottomOf="@id/titleTV"/>
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:scaleType="fitXY"
+        android:layout_marginTop="@dimen/_20sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/piggie"
-        android:layout_margin="@dimen/_24sdp"/>
+        android:src="@drawable/pbank"
+        android:layout_marginEnd="@dimen/_24sdp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -88,15 +92,20 @@
             app:layout_constraintWidth_percent="0.4"
             android:id="@+id/buttonBonusCons">
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/gift_ico"
                 android:id="@+id/giftImg"
+                android:layout_margin="@dimen/_8sdp"
+                app:layout_constraintEnd_toStartOf="@id/getBounusTexxt"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
             <TextView
+                app:layout_constraintEnd_toStartOf="@id/adLeft"
+                android:id="@+id/getBounusTexxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -108,9 +117,15 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/intersemibold"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/adLeft"
+                    app:layout_constraintStart_toEndOf="@id/getBounusTexxt"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_10sdp"
                     android:src="@drawable/ad_ico"
+                    android:scaleType="fitXY"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -148,13 +163,18 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/intersemibold"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:scaleType="fitXY"
                 android:src="@drawable/ad_ico"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="10dp"/>
+               />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -170,8 +190,9 @@
         app:layout_constraintTop_toBottomOf="@id/consButtons"
         app:layout_constraintHeight_percent="0.2">
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/_60sdp"
             android:layout_height="wrap_content"
+            android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/jarImg"
