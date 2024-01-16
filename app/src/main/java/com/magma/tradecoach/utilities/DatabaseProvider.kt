@@ -7,7 +7,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.magma.tradecoach.model.*
-import com.magma.tradecoach.networking.UserRepository
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import java.time.LocalDateTime

@@ -1,6 +1,5 @@
 package com.magma.tradecoach.ui.fragments.community.feed
 
-import android.icu.text.CaseMap.Title
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,16 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.magma.tradecoach.R
 import com.magma.tradecoach.databinding.FragmentFeedBinding
 import com.magma.tradecoach.interfaces.BlogPostClickedInterface
-import com.magma.tradecoach.interfaces.BlogPostCreatedInterface
 import com.magma.tradecoach.model.BlogPostModel
-import com.magma.tradecoach.model.TopicModel
 import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
