@@ -10,6 +10,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.*
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.TranslateAnimation
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -162,6 +165,23 @@ object Utils {
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         return year < currentYear && year > 1900
     }
-
+     fun animateViewFromBottom(view: View) {
+        val animate = TranslateAnimation(0f, 0f, view.height.toFloat(), 0f)
+        animate.duration = 500
+        view.startAnimation(animate)
+        view.visibility = View.VISIBLE
+    }
+     fun animateViewAppear(view: View) {
+        val fadeIn = AlphaAnimation(0f, 1f)
+        fadeIn.duration = 500
+        view.startAnimation(fadeIn)
+        view.visibility = View.VISIBLE
+    }
+    fun animateViewToBottom(view: View) {
+        val animate = TranslateAnimation(0f, 0f, 0f, view.height.toFloat())
+        animate.duration = 500
+        view.startAnimation(animate)
+        view.visibility = View.INVISIBLE
+    }
     private const val KILOBYTE = 1024
 }

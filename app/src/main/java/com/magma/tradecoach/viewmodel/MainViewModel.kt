@@ -1,11 +1,14 @@
 package com.magma.tradecoach.viewmodel
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
+import com.magma.tradecoach.model.BlogPostModel
 import com.magma.tradecoach.model.MarketCoinModel
 import com.magma.tradecoach.model.UserDataModel
 import com.magma.tradecoach.networking.CoinsRepository
@@ -22,6 +25,9 @@ class MainViewModel @Inject constructor(private val loginRegisterRepository: Log
 private val coinsRepository: CoinsRepository,
                                         private val  databaseRepository:DatabaseProvider
 ): ViewModel(){
+
+
+
     //Login Data
     private var _loginLiveData = MutableLiveData<FirebaseUser?>()
     var loginLiveData = _loginLiveData as LiveData<FirebaseUser?>
@@ -34,6 +40,9 @@ private val coinsRepository: CoinsRepository,
     //Register Data
     private var registerMutableData = MutableLiveData<Boolean>()
     var registerData = registerMutableData as LiveData<Boolean>
+    //Blog Posts
+    private var _blogPostsLiveData = MutableLiveData<ArrayList<BlogPostModel>>()
+    val blogPostsLiveData = _blogPostsLiveData as LiveData<ArrayList<BlogPostModel>>
 
     fun login(email: String, password: String,c:Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -53,6 +62,7 @@ private val coinsRepository: CoinsRepository,
             )
         }
     }
+
     fun getCoins() {
         viewModelScope.launch {
             coinsRepository.getResults().fold({ result ->
@@ -66,6 +76,34 @@ private val coinsRepository: CoinsRepository,
     fun getUserData(){
         viewModelScope.launch {
                 _currentUser.postValue(databaseRepository.getUser())
+        }
+    }
+    fun buyCoins(user:UserDataModel
+                 ,coin: MarketCoinModel, quantity: Int) {
+        viewModelScope.launch {
+            databaseRepository.buyCoins(user,coin,quantity)
+        }
+    }
+    fun sellCoins(user:UserDataModel
+                  ,coin: MarketCoinModel, quantity: Int) {
+        viewModelScope.launch {
+            databaseRepository.sellCoins(user,coin,quantity)
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun createBlogPost(title:String, content:String, author:String){
+        viewModelScope.launch {
+            databaseRepository.createBlogPost(title,content,author)
+        }
+    }
+    fun getPosts() {
+        viewModelScope.launch {
+            try {
+                val posts = databaseRepository.getPosts()
+                _blogPostsLiveData.postValue(posts as ArrayList<BlogPostModel>?)
+            } catch (e: Exception) {
+                println(e)
+            }
         }
     }
 

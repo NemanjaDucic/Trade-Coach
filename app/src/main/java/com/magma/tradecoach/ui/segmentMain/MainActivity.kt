@@ -1,16 +1,22 @@
 package com.magma.tradecoach.ui.segmentMain
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.gson.Gson
 import com.magma.tradecoach.R
 import com.magma.tradecoach.databinding.ActivityMainBinding
+import com.magma.tradecoach.interfaces.BlogPostCreatedInterface
 import com.magma.tradecoach.model.MarketCoinModel
 import com.magma.tradecoach.ui.fragments.community.CommunityFragment
+import com.magma.tradecoach.ui.fragments.community.feed.FeedFragment
 import com.magma.tradecoach.ui.fragments.currencies.CurrenciesFragment
 import com.magma.tradecoach.ui.fragments.dedication.DedicationFragment
 import com.magma.tradecoach.ui.fragments.home.HomeFragment
@@ -18,12 +24,14 @@ import com.magma.tradecoach.utilities.ConsecutiveDayChecker
 import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -31,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         init()
 
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun init(){
         viewModel.getCoins()
         viewModel.initialCurrencyListLiveData.observe(this){
@@ -63,6 +72,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack()
 
         }
+
     }
 
     private fun updateUIWithData(data: List<MarketCoinModel>) {
@@ -75,4 +85,5 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, HomeFragment())
             .commit()
     }
+
 }

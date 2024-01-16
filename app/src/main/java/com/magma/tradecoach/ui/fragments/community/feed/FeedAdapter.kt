@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.magma.tradecoach.R
+import com.magma.tradecoach.interfaces.BlogPostClickedInterface
+import com.magma.tradecoach.model.BlogPostModel
 import com.magma.tradecoach.model.TopicModel
 
 class FeedAdapter  (
-    var items :ArrayList<TopicModel>
+    var items :ArrayList<BlogPostModel>,
+    private val listener:BlogPostClickedInterface
 ) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,9 +22,11 @@ class FeedAdapter  (
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.topic.text = items[position].title
-        holder.description.text = items[position].subtitle
-
+        holder.topic.text = items[position].postTitle
+        holder.description.text = items[position].postContent
+        holder.topic.setOnClickListener {
+            items[position].let { listener.postClicked(it) }
+        }
     }
 
     override fun getItemCount(): Int {
@@ -34,7 +39,7 @@ class FeedAdapter  (
         val description: TextView = itemView.findViewById(R.id.textTopic)
     }
 
-    fun setData(data: ArrayList<TopicModel>) {
+    fun setData(data: ArrayList<BlogPostModel>) {
         items = data
         notifyDataSetChanged()
     }

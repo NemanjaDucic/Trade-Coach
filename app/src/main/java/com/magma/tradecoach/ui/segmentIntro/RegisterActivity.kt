@@ -41,7 +41,6 @@ class RegisterActivity:AppCompatActivity() {
         binding.countyCodePicker.setOnCountryChangeListener {
             binding.countryET.setText(binding.countyCodePicker.selectedCountryName)
         }
-
         }
 
     }

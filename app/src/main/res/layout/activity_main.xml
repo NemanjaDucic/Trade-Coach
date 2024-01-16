@@ -34,4 +34,16 @@
         app:bubbletab_vertical_padding="@dimen/_8sdp"
         app:bubbletab_tab_corner_radius="@dimen/_20sdp">
     </io.ak1.BubbleTabBar>
+    <View
+        android:visibility="invisible"
+        android:id="@+id/darkOverlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.18"
+        android:background="#70000000"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
