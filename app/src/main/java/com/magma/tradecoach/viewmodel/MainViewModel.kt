@@ -14,7 +14,6 @@ import com.magma.tradecoach.model.UserDataModel
 import com.magma.tradecoach.networking.CoinsRepository
 import com.magma.tradecoach.networking.LoginRegisterRepository
 import com.magma.tradecoach.utilities.DatabaseProvider
-import com.magma.tradecoach.utilities.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
