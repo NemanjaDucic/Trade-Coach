@@ -6,4 +6,9 @@ object Constants {
       const val PURCHASE_GRID_COUNT = 3
       const val CHAT_LIMIT = 50
       const val BLOG_POST_LIMIT = 100
+      const val MAIN = "MAIN"
+      const val COMPARE = "CompareToMGM"
+      const val GROWTH = "Growth"
+
+
 }
