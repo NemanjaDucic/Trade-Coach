@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/edit_text_outline"
-    android:layout_margin="10dp"
-    android:layout_height="140dp">
+    android:layout_margin="@dimen/_8sdp"
+    android:layout_height="@dimen/_120sdp">
 <TextView
     android:layout_width="0dp"
 
@@ -18,7 +18,7 @@
     android:textAlignment="center"
     android:id="@+id/textTitle"
     android:textColor="@color/white"
-    android:layout_margin="10dp"/>
+    android:layout_margin="@dimen/_8sdp"/>
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -31,6 +31,6 @@
         android:textAlignment="center"
         android:id="@+id/textTopic"
         android:textColor="@color/white"
-        android:layout_margin="24dp"/>
+        android:layout_margin="@dimen/_18sdp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

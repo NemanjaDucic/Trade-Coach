@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import com.magma.tradecoach.databinding.FragmentCommunityBinding
 import com.magma.tradecoach.databinding.FragmentCurrenciesBinding
+import com.magma.tradecoach.ui.fragments.home.HomeFragment
+import com.magma.tradecoach.utilities.Utils
 
 class CurrenciesFragment:Fragment() {
     private lateinit var binding:FragmentCurrenciesBinding
@@ -16,11 +19,12 @@ class CurrenciesFragment:Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCurrenciesBinding.inflate(inflater)
-
-
+        init()
         return binding.root
     }
-
     private fun  init(){
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+           Utils.setFragment(requireActivity(),HomeFragment(),0)
+        }
     }
 }

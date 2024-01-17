@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.magma.tradecoach.databinding.ActivityLoginBinding
+import com.magma.tradecoach.utilities.Constants
+import com.magma.tradecoach.utilities.PrefSingleton
 import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,9 +22,11 @@ class LoginActivity:AppCompatActivity() {
     }
     private fun listeners(){
         binding.registerbotTV.setOnClickListener {
+
             Utils.intent(this, RegisterActivity::class.java,null)
         }
         binding.imageButton.setOnClickListener {
+
             viewModel.login(Utils.getETText(binding.emailadressET),Utils.getETText(binding.passwordET),this)
         }
 

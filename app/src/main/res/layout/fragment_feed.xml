@@ -3,10 +3,119 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.08"
+        android:layout_marginTop="@dimen/_5sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rect_bck"
+        app:layout_constraintWidth_percent="0.4"
+        android:id="@+id/createPostButton">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/create_post"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:fontFamily="@font/intersemibold"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/feedRV"
-        android:layout_height="match_parent"/>
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/createPostButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/createPostView"
+        android:visibility="invisible"
+        android:background="@drawable/gradiant_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/icClose"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/_8sdp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"/>
 
+        <TextView
+            android:id="@+id/createTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/white"
+            android:text="Create Post"
+            android:fontFamily="@font/intermedium"
+            android:layout_margin="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:textSize="24sp"/>
+        <EditText
+
+            android:id="@+id/titleTV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_20sdp"
+            android:hint="Title Your Post"
+            android:textAlignment="center"
+            app:layout_constraintHeight_percent="0.12"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/edit_text_outline"
+            android:textColor="@color/white"
+            android:textCursorDrawable="@drawable/cursor_drawbale"
+            android:textColorHint="@color/silver"
+            app:layout_constraintTop_toBottomOf="@id/createTitle"/>
+        <EditText
+            android:id="@+id/contentTV"
+            android:layout_width="0dp"
+            android:gravity="top|left"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/_20sdp"
+            android:hint="Text of your post"
+            android:padding="@dimen/_5sdp"
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@drawable/edit_text_outline"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/titleTV"
+            android:textCursorDrawable="@drawable/cursor_drawbale"
+            android:textColorHint="@color/silver"
+            />
+        <TextView
+            android:id="@+id/publishButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/button"
+            android:layout_margin="@dimen/_15sdp"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintHeight_percent="0.09"
+            app:layout_constraintTop_toBottomOf="@id/contentTV"
+            android:textColor="@color/white"
+            android:text="Publish"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="25sp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

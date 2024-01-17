@@ -5,13 +5,27 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.*
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.TranslateAnimation
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.magma.tradecoach.R
+import com.magma.tradecoach.model.UserDataModel
+import io.ak1.BubbleTabBar
+import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("StaticFieldLeak")
@@ -70,14 +84,51 @@ object Utils {
     fun displayToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
+    fun getCurrentDateTime(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val currentDate = Date()
+        return dateFormat.format(currentDate)
+    }
+    fun setFragment(activity: FragmentActivity, fragment: Fragment, position: Int) {
+        val transaction = activity.supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragmentContainer, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
 
+        val tabLayout = activity.findViewById<BubbleTabBar>(R.id.bubbleTabBar)
+        tabLayout.setSelected(position)
+    }
     fun setRecycler(recycler: RecyclerView, adapter: RecyclerView.Adapter<*>) {
         val layoutManager = GridLayoutManager(context, 1)
         recycler.setHasFixedSize(true)
         recycler.layoutManager = layoutManager
         recycler.adapter = adapter
     }
+     fun setAvatarInitials(username: String, imageView: ImageView) {
+        val safeUsername = if (username.length > 2) username else "Tesla Coiner"
+        val b = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
+        val c = Canvas(b)
+        c.drawColor(Color.parseColor("#313131"))
+        val paint = Paint()
+        paint.textSize = 46f
+        paint.color = Color.parseColor("#FFDC64")
+        c.drawText(safeUsername.substring(0, 2).uppercase(Locale.getDefault()), 22f, 65f, paint)
+        imageView.setImageBitmap(b)
+    }
 
+    fun isPremiumUser(user:UserDataModel):Boolean{
+        return user.isPremium == true
+    }
+
+     fun splitTime(time: String): String {
+        return try {
+            val split = time.split(" ".toRegex()).dropLastWhile { it.isEmpty() }
+                .toTypedArray()
+            split[1]
+        } catch (e: Exception) {
+            " "
+        }
+    }
     fun setRecyclerHorizontal(recycler: RecyclerView, adapter: RecyclerView.Adapter<*>) {
         val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         recycler.setHasFixedSize(true)
@@ -114,6 +165,23 @@ object Utils {
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         return year < currentYear && year > 1900
     }
-
+     fun animateViewFromBottom(view: View) {
+        val animate = TranslateAnimation(0f, 0f, view.height.toFloat(), 0f)
+        animate.duration = 500
+        view.startAnimation(animate)
+        view.visibility = View.VISIBLE
+    }
+     fun animateViewAppear(view: View) {
+        val fadeIn = AlphaAnimation(0f, 1f)
+        fadeIn.duration = 500
+        view.startAnimation(fadeIn)
+        view.visibility = View.VISIBLE
+    }
+    fun animateViewToBottom(view: View) {
+        val animate = TranslateAnimation(0f, 0f, 0f, view.height.toFloat())
+        animate.duration = 500
+        view.startAnimation(animate)
+        view.visibility = View.INVISIBLE
+    }
     private const val KILOBYTE = 1024
 }
