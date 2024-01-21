@@ -8,13 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
-import com.magma.tradecoach.model.BlogPostModel
-import com.magma.tradecoach.model.MarketCoinModel
-import com.magma.tradecoach.model.UserDataModel
+import com.magma.tradecoach.model.*
 import com.magma.tradecoach.networking.CoinsRepository
 import com.magma.tradecoach.networking.LoginRegisterRepository
+import com.magma.tradecoach.networking.UserRepository
 import com.magma.tradecoach.utilities.DatabaseProvider
-import com.magma.tradecoach.utilities.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(private val loginRegisterRepository: LoginRegisterRepository,
 private val coinsRepository: CoinsRepository,
-                                        private val  databaseRepository:DatabaseProvider
+                                        private val  databaseRepository:DatabaseProvider,
+                                        private val userRepository:UserRepository
 ): ViewModel(){
 
 
@@ -44,6 +43,9 @@ private val coinsRepository: CoinsRepository,
     private var _blogPostsLiveData = MutableLiveData<ArrayList<BlogPostModel>>()
     val blogPostsLiveData = _blogPostsLiveData as LiveData<ArrayList<BlogPostModel>>
 
+    //Users Coins
+    private var _coinsLiveData = MutableLiveData<ArrayList<CoinInfoModel>?>()
+    var coinsLiveData = _coinsLiveData as LiveData<ArrayList<CoinInfoModel>?>
     fun login(email: String, password: String,c:Context) {
         viewModelScope.launch(Dispatchers.IO) {
             loginRegisterRepository.login(email, password,c)
@@ -106,5 +108,11 @@ private val coinsRepository: CoinsRepository,
             }
         }
     }
+    fun getUsersCoins() {
+        viewModelScope.launch {
+            _coinsLiveData.postValue(currentUser.value?.let { userRepository.sortAndCountUserCoins(it)})
+              }
+    }
+
 
 }

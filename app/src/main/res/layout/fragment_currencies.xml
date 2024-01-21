@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
+        android:id="@+id/titleTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -15,4 +16,108 @@
         android:textAlignment="center"
         android:layout_margin="@dimen/_16sdp"
         android:text="@string/currencies"/>
+
+    <TextView
+        android:id="@+id/valueTV"
+        android:layout_width="0dp"
+        android:text="Value"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:layout_margin="@dimen/_20sdp"
+        app:layout_constraintEnd_toStartOf="@id/magmaValueTV"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTV"/>
+
+    <TextView
+        android:text="Value in MGM"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:id="@+id/magmaValueTV"
+        android:layout_width="0dp"
+        android:textAlignment="center"
+        android:layout_margin="@dimen/_20sdp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/valueTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTV"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/magmaValueTV"
+        android:id="@+id/currenciesRV"/>
+    <View
+        android:id="@+id/blurView"
+        android:background="#90000000"
+        android:visibility="invisible"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_percent="0.65"/>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/menuButton"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_16sdp"
+        android:src="@android:drawable/ic_menu_more"
+        android:tint="@color/white"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/buttonsContainer"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+        android:background="@drawable/gradiant_background"
+        app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintHeight_percent="0.35">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/possessionButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/growthButton"
+        android:layout_width="0dp"
+        android:text="My Possession"
+        android:textColor="@color/white"
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/button"
+        android:layout_height="0dp"/>
+    <androidx.appcompat.widget.AppCompatButton
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/amountButton"
+        app:layout_constraintTop_toBottomOf="@id/possessionButton"
+        android:id="@+id/growthButton"
+        android:layout_width="0dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button"
+        android:text="Currency Growth"
+        android:layout_margin="@dimen/_20sdp"
+        android:layout_height="0dp"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/growthButton"
+        android:id="@+id/amountButton"
+        android:layout_width="0dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button"
+        android:text="Amount of Currency"
+        android:layout_height="0dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

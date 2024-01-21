@@ -11,11 +11,8 @@ import com.magma.tradecoach.databinding.FragmentHomeBinding
 import com.magma.tradecoach.networking.DataRepository
 import com.magma.tradecoach.ui.fragments.currencies.CurrenciesFragment
 import com.magma.tradecoach.ui.segmentPurchase.PurchaseActivity
-import com.magma.tradecoach.utilities.PrefSingleton
-import com.magma.tradecoach.utilities.SessionManager
 import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.utilities.Utils.setFragment
-import com.magma.tradecoach.viewmodel.ChatViewModel
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +35,7 @@ class HomeFragment: Fragment() {
 private fun init() {
     adapter = HomeAdapter(arrayListOf())
     Utils.setRecycler(binding.topRecyclerView,adapter)
-    adapter.setData(DataRepository.homeData())
+    adapter.setData(DataRepository.getHomeData())
     listeners()
     }
     private fun listeners(){
