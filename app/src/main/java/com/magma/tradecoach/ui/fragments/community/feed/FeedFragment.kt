@@ -24,7 +24,7 @@ class FeedFragment:Fragment(),BlogPostClickedInterface {
     private lateinit var adapter :FeedAdapter
     private lateinit var binding: FragmentFeedBinding
     private val viewModel: MainViewModel by viewModels()
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,66 +36,67 @@ class FeedFragment:Fragment(),BlogPostClickedInterface {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-
         adapter = FeedAdapter(arrayListOf(),this)
         Utils.setRecycler(binding.feedRV,adapter)
+
         viewModel.getUserData()
         viewModel.getPosts()
-        viewModel.blogPostsLiveData.observe(this){
-        adapter.setData(it)
+        viewModel.blogPostsLiveData.observe(this) {
+            adapter.setData(it)
         }
+
         listeners()
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun listeners(){
         binding.createPostButton.setOnClickListener {
             viewModel.currentUser.observe(this){
-                if (Utils.isPremiumUser(it!!)){
-                    showOverlayToPost()
+                if (it == null) return@observe
+
+                if (Utils.isPremiumUser(it)){
+                    showOverlay(true)
                 } else {
                     Toast.makeText(context, "Only Premium Users Can Create Posts", Toast.LENGTH_SHORT).show()
                 }
             }
         }
-        binding.publishButton.setOnClickListener {
 
-            viewModel.currentUser.value?.emailAddress?.let { it1 ->
-                viewModel.createBlogPost(Utils.getETText(binding.titleTV),Utils.getETText(binding.contentTV),
-                    it1
+        binding.publishButton.setOnClickListener {
+            viewModel.currentUser.value?.emailAddress?.let { emailAddress ->
+                viewModel.createBlogPost(
+                    Utils.getETText(binding.titleTV), Utils.getETText(binding.contentTV),
+                    emailAddress
                 ).let {
                     Utils.animateViewToBottom(binding.createPostView)
                     hideOverlay()
-                    Toast.makeText(activity,"Post Create Successfully",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Post Created Successfully", Toast.LENGTH_SHORT).show()
                     viewModel.getPosts()
-
                 }
             }
         }
+
         binding.icClose.setOnClickListener {
             hideOverlay()
         }
-
     }
-    private fun showOverlayToPost(){
+
+    private fun showOverlay(toPost: Boolean) {
         val darkOverlay = activity?.findViewById<View>(R.id.darkOverlay)
         Utils.animateViewFromBottom(binding.createPostView)
-        binding.titleTV.setText("")
-        binding.contentTV.setText("")
-        darkOverlay?.let { Utils.animateViewAppear(it) }
-    }
-    private fun showOverlayToRead(){
-        val darkOverlay = activity?.findViewById<View>(R.id.darkOverlay)
-        Utils.animateViewFromBottom(binding.createPostView)
-        darkOverlay?.let { Utils.animateViewAppear(it) }
 
+        if (toPost) {
+            binding.titleTV.setText("")
+            binding.contentTV.setText("")
+        }
+
+        darkOverlay?.let { Utils.animateViewAppear(it) }
     }
 
     private fun hideOverlay(){
         val darkOverlay = activity?.findViewById<View>(R.id.darkOverlay)
         Utils.animateViewToBottom(binding.createPostView)
         darkOverlay?.isVisible = false
+
         binding.publishButton.isVisible = true
         binding.titleTV.isEnabled = true
         binding.contentTV.isEnabled = true
@@ -103,14 +104,13 @@ class FeedFragment:Fragment(),BlogPostClickedInterface {
         binding.contentTV.setText("")
     }
 
-
     override fun postClicked(post: BlogPostModel) {
-        showOverlayToRead()
+        showOverlay(false)
+
         binding.publishButton.isVisible = false
         binding.titleTV.setText(post.postTitle)
         binding.contentTV.setText(post.postContent)
         binding.titleTV.isEnabled = false
         binding.contentTV.isEnabled = false
-
     }
 }

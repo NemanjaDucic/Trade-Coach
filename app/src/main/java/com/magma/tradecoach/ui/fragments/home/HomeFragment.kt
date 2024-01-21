@@ -32,26 +32,26 @@ class HomeFragment: Fragment() {
 
         return binding.root
     }
-private fun init() {
-    adapter = HomeAdapter(arrayListOf())
-    Utils.setRecycler(binding.topRecyclerView,adapter)
-    adapter.setData(DataRepository.getHomeData())
-    listeners()
+
+    private fun init() {
+        adapter = HomeAdapter(arrayListOf())
+        Utils.setRecycler(binding.topRecyclerView, adapter)
+        adapter.setData(DataRepository.homeData())
+        listeners()
     }
-    private fun listeners(){
-    binding.investButton.setOnClickListener {
-    setFragment(requireActivity(),CurrenciesFragment(),2)
+
+    private fun listeners() {
+        binding.investButton.setOnClickListener {
+            setFragment(requireActivity(), CurrenciesFragment(), 2)
         }
         binding.buttonBonusCons.setOnClickListener {
             viewModel.getUserData()
 
         }
         binding.jarImg.setOnClickListener {
-            val intent  = Intent(requireContext(),PurchaseActivity::class.java)
-            startActivity(intent)
+            context?.let {
+                Utils.intent(it, PurchaseActivity::class.java)
+            }
         }
     }
-
-
-
 }

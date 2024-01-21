@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.magma.tradecoach.databinding.ActivityLoginBinding
 import com.magma.tradecoach.databinding.ActivityRegisterBinding
 import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
@@ -20,6 +19,7 @@ class RegisterActivity:AppCompatActivity() {
             finish()
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -28,19 +28,26 @@ class RegisterActivity:AppCompatActivity() {
         listeners()
     }
 
-    private fun listeners(){
+    private fun listeners() {
         binding.imageButton.setOnClickListener {
-            viewModel.register(utils.getETText(binding.usernameET),utils.getETText(binding.countryET),utils.getETText(binding.emailET),utils.getETText(binding.passwordET),this)
+            viewModel.register(
+                utils.getETText(binding.usernameET),
+                utils.getETText(binding.countryET),
+                utils.getETText(binding.emailET),
+                utils.getETText(binding.passwordET),
+                this
+            )
         }
+
         binding.loginTV.setOnClickListener {
-           Utils.intent(this,LoginActivity::class.java,null)
+            Utils.intent(this, LoginActivity::class.java)
         }
+
         binding.countyCodePicker.setShowPhoneCode(false)
         binding.countyCodePicker.setCcpDialogShowPhoneCode(false)
         binding.countyCodePicker.showFullName(true)
         binding.countyCodePicker.setOnCountryChangeListener {
             binding.countryET.setText(binding.countyCodePicker.selectedCountryName)
         }
-        }
-
     }
+}

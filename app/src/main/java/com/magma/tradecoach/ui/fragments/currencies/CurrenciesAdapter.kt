@@ -1,5 +1,6 @@
 package com.magma.tradecoach.ui.fragments.currencies
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.magma.tradecoach.R
-import com.magma.tradecoach.interfaces.BlogPostClickedInterface
-import com.magma.tradecoach.model.BlogPostModel
 import com.magma.tradecoach.model.MarketCoinModel
-import com.magma.tradecoach.ui.fragments.community.feed.FeedAdapter
 import com.magma.tradecoach.utilities.Constants
 
 class CurrenciesAdapter (
@@ -20,7 +18,6 @@ class CurrenciesAdapter (
 ) : RecyclerView.Adapter<CurrenciesAdapter.ViewHolder>() {
     var kind = Constants.MAIN
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_my_currencies, parent, false)
         return ViewHolder(view)
     }
@@ -39,9 +36,8 @@ class CurrenciesAdapter (
             }
 
         }
-        holder.leftTextView.text = items[position].current_price.toString()
+        holder.leftTextView.text = items[position].currentPrice.toString()
         Glide.with(holder.itemView.context).load(items[position].image).placeholder(R.drawable.mcoin).into(holder.cImage)
-
     }
 
     override fun getItemCount(): Int {
@@ -57,9 +53,9 @@ class CurrenciesAdapter (
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(data: ArrayList<MarketCoinModel>) {
         items = data
         notifyDataSetChanged()
     }
-
 }

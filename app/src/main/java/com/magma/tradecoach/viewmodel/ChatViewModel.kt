@@ -1,14 +1,9 @@
 package com.magma.tradecoach.viewmodel
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,14 +18,13 @@ import com.magma.tradecoach.ui.fragments.community.chat.ChatViewHolder
 import com.magma.tradecoach.utilities.Constants
 import com.magma.tradecoach.utilities.PrefSingleton
 import com.magma.tradecoach.utilities.Utils
-import java.util.*
 
 class ChatViewModel: ViewModel() {
     val observeAdapter = MutableLiveData<FirebaseRecyclerAdapter<ChatMessage, ChatViewHolder>>()
 
     private val context = applicationContext()
 
-    private var adapter: FirebaseRecyclerAdapter<ChatMessage, ChatViewHolder>? = null
+    private lateinit var adapter: FirebaseRecyclerAdapter<ChatMessage, ChatViewHolder>
     private val options: FirebaseRecyclerOptions<ChatMessage>
 
     init {
@@ -82,9 +76,7 @@ class ChatViewModel: ViewModel() {
             }
         }
 
-        adapter?.startListening()
-        observeAdapter.value = adapter!!
+        adapter.startListening()
+        observeAdapter.value = adapter
     }
-
-
 }

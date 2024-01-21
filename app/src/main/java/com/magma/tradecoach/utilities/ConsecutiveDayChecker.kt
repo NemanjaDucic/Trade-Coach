@@ -9,8 +9,8 @@ import java.util.Calendar
 import java.util.Date
 
 class ConsecutiveDayChecker(private val context: Context) {
-
-
+    //TODO Zasto ovde pravimo nove shared prefs, ako imamo pref singleton?
+    //TODO Cuvanje svih ovih stvari treba da ima key koji je konstanta, a ne da se hardcoduje string
     @SuppressLint("SimpleDateFormat")
     fun onUserLogin() {
         val dateFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")

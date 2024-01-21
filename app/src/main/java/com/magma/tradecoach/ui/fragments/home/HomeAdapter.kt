@@ -1,5 +1,6 @@
 package com.magma.tradecoach.ui.fragments.home
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,6 @@ import com.magma.tradecoach.model.HomeItemModel
 class HomeAdapter(
     var items: ArrayList<HomeItemModel>
 ) : RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false)
@@ -23,7 +23,6 @@ class HomeAdapter(
         holder.name.text = items[position].name
         holder.value.text = items[position].value
         holder.lastValue.text = items[position].update
-
     }
 
     override fun getItemCount(): Int {
@@ -31,16 +30,15 @@ class HomeAdapter(
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-
         val symbol: TextView = itemView.findViewById(R.id.shortNameTV)
         val name: TextView = itemView.findViewById(R.id.fullnameTV)
         val value: TextView = itemView.findViewById(R.id.valueTV)
         val lastValue:TextView = itemView.findViewById(R.id.lastvalueTV)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(data: ArrayList<HomeItemModel>) {
         items = data
         notifyDataSetChanged()
     }
-
 }

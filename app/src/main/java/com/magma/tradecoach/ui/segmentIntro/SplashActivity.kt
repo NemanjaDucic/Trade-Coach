@@ -15,8 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashActivity:AppCompatActivity() {
     private lateinit var binding:ActivitySplashBinding
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
@@ -25,7 +23,7 @@ class SplashActivity:AppCompatActivity() {
     }
     private fun startActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
-            val isLogged = PrefSingleton.instance?.isLogged() ?: false
+            val isLogged = PrefSingleton.instance.isLogged()
 
             val targetActivity = if (isLogged) {
                 MainActivity::class.java

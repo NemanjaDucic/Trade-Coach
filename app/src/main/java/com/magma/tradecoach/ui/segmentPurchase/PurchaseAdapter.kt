@@ -1,5 +1,6 @@
 package com.magma.tradecoach.ui.segmentPurchase
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,15 +34,14 @@ class PurchaseAdapter  (
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-
         val name: TextView = itemView.findViewById(R.id.name_text_view)
         val image: ImageView = itemView.findViewById(R.id.name_image_view)
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(data: ArrayList<PurchaseModel>) {
         items = data
         notifyDataSetChanged()
     }
-
 }

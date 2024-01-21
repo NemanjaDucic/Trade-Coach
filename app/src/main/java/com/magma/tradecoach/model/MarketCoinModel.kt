@@ -6,7 +6,8 @@ data class MarketCoinModel(
     val ath: Double,
     @SerializedName("ath_change_percentage")
     val athChangePercentage: Double,
-    val ath_date: String,
+    @SerializedName("ath_date")
+    val athDate: String,
     val atl: Double,
     @SerializedName("atl_change_percentage")
     val atlChangePercentage: Double,

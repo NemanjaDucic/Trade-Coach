@@ -6,13 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.magma.tradecoach.databinding.FragmentLeaderboardBinding
-import com.magma.tradecoach.model.LeadrboardModel
+import com.magma.tradecoach.model.LeaderboardModel
 import com.magma.tradecoach.utilities.Utils
 
 class LeaderboardFragment:Fragment() {
-    private lateinit var adapter:LeaderboardAdapter
+    private lateinit var adapter: LeaderboardAdapter
     private lateinit var binding: FragmentLeaderboardBinding
-    private val holderArray = arrayListOf<LeadrboardModel>(LeadrboardModel(1,"somename",500),LeadrboardModel(1,"somename",500),LeadrboardModel(1,"somename",500))
+    private val holderArray = arrayListOf(
+        LeaderboardModel(1, "somename", 500),
+        LeaderboardModel(1, "somename", 500),
+        LeaderboardModel(1, "somename", 500)
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,9 +28,9 @@ class LeaderboardFragment:Fragment() {
 
         return binding.root
     }
-    private fun init(){
-        adapter = LeaderboardAdapter(holderArray)
-        Utils.setRecycler(binding.leaderboardRV,adapter)
 
+    private fun init() {
+        adapter = LeaderboardAdapter(holderArray)
+        Utils.setRecycler(binding.leaderboardRV, adapter)
     }
 }

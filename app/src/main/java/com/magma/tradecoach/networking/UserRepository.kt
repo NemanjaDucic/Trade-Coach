@@ -2,9 +2,7 @@ package com.magma.tradecoach.networking
 
 import com.magma.tradecoach.model.CoinInfoModel
 import com.magma.tradecoach.model.CoinModel
-import com.magma.tradecoach.model.MarketCoinModel
 import com.magma.tradecoach.model.UserDataModel
-import com.magma.tradecoach.utilities.Utils
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(){

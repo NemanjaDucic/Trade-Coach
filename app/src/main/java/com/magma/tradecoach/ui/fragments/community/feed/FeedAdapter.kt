@@ -1,5 +1,6 @@
 package com.magma.tradecoach.ui.fragments.community.feed
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.magma.tradecoach.R
 import com.magma.tradecoach.interfaces.BlogPostClickedInterface
 import com.magma.tradecoach.model.BlogPostModel
-import com.magma.tradecoach.model.TopicModel
 
 class FeedAdapter  (
     var items :ArrayList<BlogPostModel>,
@@ -16,7 +16,6 @@ class FeedAdapter  (
 ) : RecyclerView.Adapter<FeedAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_topic, parent, false)
         return ViewHolder(view)
     }
@@ -34,14 +33,13 @@ class FeedAdapter  (
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-
         val topic: TextView = itemView.findViewById(R.id.textTitle)
         val description: TextView = itemView.findViewById(R.id.textTopic)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(data: ArrayList<BlogPostModel>) {
         items = data
         notifyDataSetChanged()
     }
-
 }
