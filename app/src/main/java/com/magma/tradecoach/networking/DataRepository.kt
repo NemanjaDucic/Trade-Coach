@@ -6,7 +6,8 @@ import com.magma.tradecoach.model.MarketCoinModel
 
 object DataRepository {
         var data: List<MarketCoinModel>? = emptyList()
-        fun getHomeData(): ArrayList<HomeItemModel>? {
+        //TODO Remove force operators
+        fun homeData(): ArrayList<HomeItemModel> {
                 return arrayListOf(
                         HomeItemModel(
                                 data?.get(0)?.symbol?.uppercase().toString(),

@@ -3,5 +3,9 @@ package com.magma.tradecoach.interfaces
 import com.magma.tradecoach.model.BlogPostModel
 
 interface BlogPostClickedInterface {
-    fun postClicked(post:BlogPostModel)
+    fun postClicked(post: BlogPostModel)
+}
+
+interface BlogPostCreatedInterface {
+    fun blogPostCreated()
 }

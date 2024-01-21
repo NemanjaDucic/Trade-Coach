@@ -50,7 +50,7 @@ class DatabaseProvider @Inject constructor() {
 
 
     fun buyCoins(user: UserDataModel,coin:MarketCoinModel, quantity: Int): Boolean {
-        val totalCost = coin.current_price * quantity
+        val totalCost = coin.currentPrice * quantity
         return if (user.currency!! >= totalCost) {
             user.currency = user.currency?.minus(totalCost)
             if (user.coins != null) {
@@ -66,7 +66,7 @@ class DatabaseProvider @Inject constructor() {
         }
     }
     fun sellCoins(user: UserDataModel, coin: MarketCoinModel, quantity: Int): Boolean {
-        val totalEarnings = coin.current_price * quantity
+        val totalEarnings = coin.currentPrice * quantity
         val coinQuantity = user.coins?.count { it.name == coin.name } ?: 0
 
         return if (coinQuantity >= quantity) {
@@ -94,14 +94,14 @@ class DatabaseProvider @Inject constructor() {
         targetCoin: MarketCoinModel,
         targetQuantity: Int
     ): Boolean {
-        val sourceTotalCost = sourceCoin.current_price * sourceQuantity
+        val sourceTotalCost = sourceCoin.currentPrice * sourceQuantity
 
         if (user.coins?.count { it.name == sourceCoin.name } ?: 0 < sourceQuantity) {
             println("Insufficient ${sourceCoin.name}(s) to trade.")
             return false
         }
 
-        val targetTotalCost = targetCoin.current_price * targetQuantity
+        val targetTotalCost = targetCoin.currentPrice * targetQuantity
 
         if (user.currency!! < targetTotalCost) {
             println("Insufficient funds to receive $targetQuantity ${targetCoin.name}(s).")
