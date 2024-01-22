@@ -35,7 +35,7 @@ class HomeFragment: Fragment() {
 private fun init() {
     adapter = HomeAdapter(arrayListOf())
     Utils.setRecycler(binding.topRecyclerView,adapter)
-    adapter.setData(DataRepository.getHomeData())
+    DataRepository.getHomeData()?.let { adapter.setData(it) }
     listeners()
     }
     private fun listeners(){

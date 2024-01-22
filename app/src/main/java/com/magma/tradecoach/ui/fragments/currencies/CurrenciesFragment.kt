@@ -44,6 +44,8 @@ class CurrenciesFragment :Fragment() {
         Utils.setRecycler(binding.currenciesRV,myCurrAdapter)
         DataRepository.coinsData()?.let { myCurrAdapter.setData(it) }
         listeners()
+
+        // my possessions only sorts
     }
     @SuppressLint("SetTextI18n")
     private fun listeners(){
@@ -59,7 +61,12 @@ class CurrenciesFragment :Fragment() {
 
         }
         binding.growthButton.setOnClickListener {
-
+            viewModel.coinsLiveData.observe(this){
+                viewModel.initialCurrencyListLiveData.observe(this){
+                        coins ->
+                    coins.sortedByDescending { it.market_cap_change_24h }
+            }
+            }
         }
         binding.possessionButton.setOnClickListener {
             if (isMyButtonActive){

@@ -9,6 +9,11 @@ object Constants {
       const val MAIN = "MAIN"
       const val COMPARE = "CompareToMGM"
       const val GROWTH = "Growth"
+      const val HOME_ITEM_LIMIT = 3
+
+      const val LAST_LOGIN_DAY = "last_login_day"
+      const val CONSECUTIVE_DAYS = "num_consecutive_days"
+      const val ONE = 1
 
 
 }

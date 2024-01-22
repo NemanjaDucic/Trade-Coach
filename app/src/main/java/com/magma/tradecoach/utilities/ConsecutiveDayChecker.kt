@@ -3,6 +3,7 @@ package com.magma.tradecoach.utilities
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import com.magma.tradecoach.BaseApplication
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -10,7 +11,7 @@ import java.util.Date
 
 class ConsecutiveDayChecker(private val context: Context) {
 
-
+    private var preferences = PrefSingleton.instance
     @SuppressLint("SimpleDateFormat")
     fun onUserLogin() {
         val dateFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
@@ -54,36 +55,24 @@ class ConsecutiveDayChecker(private val context: Context) {
 
 
     private fun updateLastLoginDate(date: String) {
-        val sharedPref = context.getSharedPreferences("main", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.putString("last_login_day", date)
-        editor.apply()
+        preferences.saveString(Constants.LAST_LOGIN_DAY, date)
     }
 
     private fun getLastLoginDate(): String? {
-        val sharedPref = context.getSharedPreferences("main", Context.MODE_PRIVATE)
-        return sharedPref.getString("last_login_day", null)
+        return preferences.getString(Constants.LAST_LOGIN_DAY)
     }
 
     private fun getConsecutiveDays(): Int {
-        val sharedPref = context.getSharedPreferences("main", Context.MODE_PRIVATE)
-        return sharedPref.getInt("num_consecutive_days", 0)
+        return preferences.getInt(Constants.CONSECUTIVE_DAYS)
     }
 
     private fun incrementDays() {
-        val days = getConsecutiveDays() + 1
-        val sharedPref = context.getSharedPreferences("main", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.putInt("num_consecutive_days", days)
-        editor.apply()
+        val days = getConsecutiveDays() + Constants.ONE
+        preferences.saveInt(Constants.CONSECUTIVE_DAYS,days)
     }
 
     private fun resetDays() {
-        val days = 1
-        val sharedPref = context.getSharedPreferences("main", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.putInt("num_consecutive_days", days)
-        editor.apply()
+        preferences.saveInt(Constants.CONSECUTIVE_DAYS,Constants.ONE)
     }
 
     fun getStreak(): Int {

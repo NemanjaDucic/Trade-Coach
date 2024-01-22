@@ -2,29 +2,27 @@ package com.magma.tradecoach.networking
 
 import com.magma.tradecoach.model.HomeItemModel
 import com.magma.tradecoach.model.MarketCoinModel
+import com.magma.tradecoach.utilities.Constants
 
 
 object DataRepository {
         var data: List<MarketCoinModel>? = emptyList()
         fun getHomeData(): ArrayList<HomeItemModel>? {
-                return arrayListOf(
-                        HomeItemModel(
-                                data?.get(0)?.symbol?.uppercase().toString(),
-                                data?.get(0)?.name,
-                                "$ " + data?.get(0)?.current_price.toString(),
-                                data?.get(0)?.price_change_24h.toString() + "%"
-                        ), HomeItemModel(
-                                data?.get(1)?.symbol?.uppercase().toString(),
-                                data?.get(1)?.name,
-                                "$ " + data?.get(1)?.current_price.toString(),
-                                data?.get(1)?.price_change_24h.toString() + "%"
-                        ), HomeItemModel(
-                                data?.get(2)?.symbol?.uppercase().toString(),
-                                data?.get(2)?.name,
-                                "$ " + data?.get(2)?.current_price.toString(),
-                                data?.get(2)?.price_change_24h.toString() + "%"
-                        )
-                )
+                val homeDataList = ArrayList<HomeItemModel>()
+
+                for (i in 0 until minOf(data?.size ?: 0, Constants.HOME_ITEM_LIMIT)) {
+                        data?.get(i)?.let {
+                                val homeItem = HomeItemModel(
+                                        it.symbol.uppercase(),
+                                        it.name,
+                                        "$ ${it.current_price}",
+                                        "${it.price_change_24h}%"
+                                )
+                                homeDataList.add(homeItem)
+                        }
+                }
+
+                return homeDataList
         }
         fun coinsData(): ArrayList<MarketCoinModel>? {
                 return  data as ArrayList<MarketCoinModel>
