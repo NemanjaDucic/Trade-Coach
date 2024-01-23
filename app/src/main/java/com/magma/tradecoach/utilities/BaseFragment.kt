@@ -3,11 +3,9 @@ package com.magma.tradecoach.utilities
 import android.app.ProgressDialog
 import android.content.Context
 import androidx.fragment.app.Fragment
-import com.magma.tradecoach.R
 import com.magma.tradecoach.ui.segmentMain.MainActivity
 
 abstract class BaseFragment: Fragment() {
-
     lateinit var progressDialog: ProgressDialog
 
     override fun onAttach(context: Context) {

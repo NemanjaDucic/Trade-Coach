@@ -50,6 +50,5 @@ class CommunityFragment: Fragment() {
             if (selectedFragment != null) childFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, selectedFragment).commit()
         }
-
     }
 }

@@ -6,12 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.magma.tradecoach.databinding.FragmentChatBinding
@@ -54,7 +49,7 @@ class ChatFragment: BaseFragment() {
             }
     }
 
-    fun resetUI() {
+    private fun resetUI() {
         binding.eMessage.setText("")
         binding.recChat.requestFocus()
         binding.tSendMessage.visibility = View.INVISIBLE

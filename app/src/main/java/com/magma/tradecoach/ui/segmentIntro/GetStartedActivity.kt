@@ -8,7 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GetStartedActivity:AppCompatActivity() {
-    private lateinit var binding:ActivityGetStartedBinding
+    private lateinit var binding: ActivityGetStartedBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,13 +17,13 @@ class GetStartedActivity:AppCompatActivity() {
         setContentView(binding.root)
         listeners()
     }
-    private fun listeners(){
+
+    private fun listeners() {
         binding.getStartedButton.setOnClickListener {
-            Utils.intent(this,WelcomeActivity::class.java,null)
+            Utils.intent(this, WelcomeActivity::class.java)
         }
         binding.loginButton.setOnClickListener {
-            Utils.intent(this,LoginActivity::class.java,null)
-
+            Utils.intent(this, LoginActivity::class.java)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.magma.tradecoach.networking
 
-
 import com.magma.tradecoach.model.MarketCoinModel
 import retrofit2.Response
 import retrofit2.http.GET

@@ -20,22 +20,23 @@ import kotlin.coroutines.resume
 
 class LoginRegisterRepository @Inject constructor() {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val singleton = PrefSingleton
+    private val singleton = PrefSingleton.instance
     private val reference: DatabaseReference = FirebaseDatabase.getInstance().reference.child("users")
 
     suspend fun login(email: String, password: String,c:Context): Result<FirebaseUser> =
         suspendCancellableCoroutine { cont ->
             auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        it.result.user?.let { it1 -> singleton.instance.saveString("id", it1.uid) }
-                        cont.resume(Result.success(auth.currentUser!!))
-                        singleton.instance?.saveBool(Constants.LOGGED_KEY,true)
-                        val intent = Intent(c, MainActivity::class.java)
-                        c.startActivity(intent)
+                .addOnCompleteListener { authResult ->
+                    if (authResult.isSuccessful) {
+                        authResult.result.user?.let { user ->
+                            singleton.saveString("id", user.uid)
+                            cont.resume(Result.success(user))
+                        }
 
+                        singleton.saveBool(Constants.LOGGED_KEY, true)
+                        Utils.intent(c, MainActivity::class.java, null)
                     } else {
-                        cont.resume(Result.failure(Throwable(it.exception)))
+                        cont.resume(Result.failure(Throwable(authResult.exception)))
                     }
                 }
 
@@ -43,8 +44,6 @@ class LoginRegisterRepository @Inject constructor() {
 
             }
         }
-
-
 
 suspend fun register(username: String, country: String, email: String, password: String, c: Context): Boolean {
     return try {
@@ -59,7 +58,7 @@ suspend fun register(username: String, country: String, email: String, password:
             println(uid)
             val user = UserDataModel(username, uid, email, country, 100.0)
             uid?.let { reference.child(it).setValue(user) }
-            singleton.instance?.saveBool(Constants.LOGGED_KEY, true)
+            singleton.saveBool(Constants.LOGGED_KEY, true)
             val intent = Intent(c, MainActivity::class.java)
             c.startActivity(intent)
 

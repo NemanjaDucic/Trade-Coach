@@ -19,14 +19,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val loginRegisterRepository: LoginRegisterRepository,
-private val coinsRepository: CoinsRepository,
-                                        private val  databaseRepository:DatabaseProvider,
-                                        private val userRepository:UserRepository
-): ViewModel(){
-
-
-
+class MainViewModel @Inject constructor(
+    private val loginRegisterRepository: LoginRegisterRepository,
+    private val coinsRepository: CoinsRepository,
+    private val databaseRepository: DatabaseProvider,
+    private val userRepository: UserRepository
+) : ViewModel() {
     //Login Data
     private var _loginLiveData = MutableLiveData<FirebaseUser?>()
     var loginLiveData = _loginLiveData as LiveData<FirebaseUser?>
@@ -34,11 +32,13 @@ private val coinsRepository: CoinsRepository,
     private var _currentUser = MutableLiveData<UserDataModel?>()
     var currentUser = _currentUser as LiveData<UserDataModel?>
     private var _initialCurrencyListLiveData = MutableLiveData<List<MarketCoinModel>>()
-    var initialCurrencyListLiveData = _initialCurrencyListLiveData as LiveData<List<MarketCoinModel>>
+    var initialCurrencyListLiveData =
+        _initialCurrencyListLiveData as LiveData<List<MarketCoinModel>>
 
     //Register Data
     private var registerMutableData = MutableLiveData<Boolean>()
     var registerData = registerMutableData as LiveData<Boolean>
+
     //Blog Posts
     private var _blogPostsLiveData = MutableLiveData<ArrayList<BlogPostModel>>()
     val blogPostsLiveData = _blogPostsLiveData as LiveData<ArrayList<BlogPostModel>>
@@ -46,9 +46,9 @@ private val coinsRepository: CoinsRepository,
     //Users Coins
     private var _coinsLiveData = MutableLiveData<ArrayList<CoinInfoModel>?>()
     var coinsLiveData = _coinsLiveData as LiveData<ArrayList<CoinInfoModel>?>
-    fun login(email: String, password: String,c:Context) {
+    fun login(email: String, password: String, c: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            loginRegisterRepository.login(email, password,c)
+            loginRegisterRepository.login(email, password, c)
                 .fold({
                     _loginLiveData.postValue(it)
                 }) {
@@ -57,10 +57,10 @@ private val coinsRepository: CoinsRepository,
         }
     }
 
-    fun register(username:String,country:String,email: String, password: String,c:Context) {
+    fun register(username: String, country: String, email: String, password: String, c: Context) {
         viewModelScope.launch {
             registerMutableData.postValue(
-                loginRegisterRepository.register(username,country,email, password,c)
+                loginRegisterRepository.register(username, country, email, password, c)
             )
         }
     }
@@ -75,29 +75,36 @@ private val coinsRepository: CoinsRepository,
                 })
         }
     }
-    fun getUserData(){
+
+    fun getUserData() {
         viewModelScope.launch {
-                _currentUser.postValue(databaseRepository.getUser())
+            _currentUser.postValue(databaseRepository.getUser())
         }
     }
-    fun buyCoins(user:UserDataModel
-                 ,coin: MarketCoinModel, quantity: Int) {
+
+    fun buyCoins(
+        user: UserDataModel, coin: MarketCoinModel, quantity: Int
+    ) {
         viewModelScope.launch {
-            databaseRepository.buyCoins(user,coin,quantity)
+            databaseRepository.buyCoins(user, coin, quantity)
         }
     }
-    fun sellCoins(user:UserDataModel
-                  ,coin: MarketCoinModel, quantity: Int) {
+
+    fun sellCoins(
+        user: UserDataModel, coin: MarketCoinModel, quantity: Int
+    ) {
         viewModelScope.launch {
-            databaseRepository.sellCoins(user,coin,quantity)
+            databaseRepository.sellCoins(user, coin, quantity)
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun createBlogPost(title:String, content:String, author:String){
+    fun createBlogPost(title: String, content: String, author: String) {
         viewModelScope.launch {
-            databaseRepository.createBlogPost(title,content,author)
+            databaseRepository.createBlogPost(title, content, author)
         }
     }
+
     fun getPosts() {
         viewModelScope.launch {
             try {
@@ -108,11 +115,14 @@ private val coinsRepository: CoinsRepository,
             }
         }
     }
+
     fun getUsersCoins() {
         viewModelScope.launch {
-            _coinsLiveData.postValue(currentUser.value?.let { userRepository.sortAndCountUserCoins(it)})
-              }
+            _coinsLiveData.postValue(currentUser.value?.let {
+                userRepository.sortAndCountUserCoins(
+                    it
+                )
+            })
+        }
     }
-
-
 }

@@ -5,5 +5,4 @@ data class HomeItemModel (
     val name:String ?= "",
     val value:String ?= "",
     val update:String ?= ""
-
     )

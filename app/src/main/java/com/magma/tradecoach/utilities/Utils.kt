@@ -52,6 +52,11 @@ object Utils {
         context.startActivity(intent)
     }
 
+    fun intent(context: Context, c: Class<*>?) {
+        val intent = Intent(context, c)
+        context.startActivity(intent)
+    }
+
     fun intent(c: Class<*>, bundle: Bundle?) {
         val intent = Intent(context, c)
         bundle?.let { intent.putExtras(it) }

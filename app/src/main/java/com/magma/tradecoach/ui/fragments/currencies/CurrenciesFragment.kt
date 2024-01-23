@@ -69,35 +69,33 @@ class CurrenciesFragment :Fragment() {
             }
         }
         binding.possessionButton.setOnClickListener {
+            setButtonsState(isMyButtonActive)
+
             if (isMyButtonActive){
-                buttonsAreActive()
                 viewModel.getUsersCoins()
             } else {
-                buttonsAreInactive()
-                viewModel.initialCurrencyListLiveData.observe(this){
-                    coins ->
-                    coins.sortedBy { it.market_cap_rank }
+                viewModel.initialCurrencyListLiveData.observe(this) { coins ->
+                    coins.sortedBy { it.marketCapRank }
                 }
             }
+
             isMyButtonActive = !isMyButtonActive
         }
     }
+
     private fun showButtons(){
         Utils.animateViewFromBottom(binding.buttonsContainer)
         Utils.animateViewAppear(binding.blurView)
-
     }
     private fun hideButtons(){
         Utils.animateViewToBottom(binding.buttonsContainer)
         binding.blurView.isVisible = false
     }
-    private fun buttonsAreActive(){
-        binding.amountButton.isEnabled = true
-        binding.possessionButton.setBackgroundResource(R.drawable.button)
-    }
-    private fun buttonsAreInactive(){
-        binding.amountButton.isEnabled = false
-        binding.possessionButton.setBackgroundResource(R.drawable.button)
-    }
 
+    private fun setButtonsState(isActive: Boolean) {
+        binding.amountButton.isEnabled = isActive
+
+        //Ako za ovaj treba drugaciji background na osnovu "isActive", samo primeni
+        binding.possessionButton.setBackgroundResource(R.drawable.button)
+    }
 }
