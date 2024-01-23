@@ -14,6 +14,4 @@ object Constants {
       const val LAST_LOGIN_DAY = "last_login_day"
       const val CONSECUTIVE_DAYS = "num_consecutive_days"
       const val ONE = 1
-
-
 }
