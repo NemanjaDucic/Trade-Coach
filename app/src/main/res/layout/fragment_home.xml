@@ -3,7 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_12sdp">
+
     <TextView
         android:id="@+id/titleTV"
         android:layout_width="wrap_content"
@@ -13,10 +15,10 @@
         app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/interbold"
         android:textColor="@color/white"
-        android:textSize="26sp"
+        android:textSize="@dimen/_22sdp"
         android:textAlignment="center"
-        android:layout_margin="@dimen/_16sdp"
         android:text="@string/home"/>
+
     <ImageView
         android:src="@drawable/mcoin"
         android:layout_marginStart="@dimen/_5sdp"
@@ -26,28 +28,28 @@
         app:layout_constraintStart_toEndOf="@id/titleTV"
         app:layout_constraintTop_toTopOf="@id/titleTV"
         app:layout_constraintBottom_toBottomOf="@id/titleTV"/>
+
     <ImageView
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_20sdp"
         android:scaleType="fitXY"
-        android:layout_marginTop="@dimen/_20sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/pbank"
-        android:layout_marginEnd="@dimen/_24sdp"/>
+        app:layout_constraintBottom_toBottomOf="@+id/titleTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_margin="@dimen/_20sdp"
-        android:id="@+id/lastVisitCons"
         android:layout_height="0dp"
-        app:layout_constraintVertical_chainStyle="packed"
+        android:id="@+id/lastVisitCons"
         android:background="@drawable/top_home_background"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@id/consButtons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTV"
-        app:layout_constraintHeight_percent="0.3">
+        app:layout_constraintTop_toBottomOf="@id/titleTV">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,112 +73,116 @@
             android:layout_margin="@dimen/_5sdp"
             app:layout_constraintTop_toBottomOf="@id/visitTV"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/consButtons"
+        android:paddingTop="@dimen/_8sdp"
+        android:paddingBottom="@dimen/_8sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lastVisitCons"
-        android:layout_width="0dp"
-        android:id="@+id/consButtons"
-        app:layout_constraintBottom_toTopOf="@id/consJar"
-        app:layout_constraintHeight_percent="0.1"
-        android:layout_height="0dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.7"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:background="@drawable/rect_bck"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.4"
-            android:id="@+id/buttonBonusCons">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/gift_ico"
-                android:id="@+id/giftImg"
-                android:layout_margin="@dimen/_8sdp"
-                app:layout_constraintEnd_toStartOf="@id/getBounusTexxt"
+        app:layout_constraintBottom_toTopOf="@id/consJar">
 
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <TextView
-                app:layout_constraintEnd_toStartOf="@id/adLeft"
-                android:id="@+id/getBounusTexxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/giftImg"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:text="Get Bonus"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:fontFamily="@font/intersemibold"/>
-                <ImageView
-                    android:id="@+id/adLeft"
-                    app:layout_constraintStart_toEndOf="@id/getBounusTexxt"
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_10sdp"
-                    android:src="@drawable/ad_ico"
-                    android:scaleType="fitXY"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="@dimen/_8sdp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonBonusCons"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            app:layout_constraintHeight_percent="0.7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/rect_bck"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_12sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.4"
-            android:id="@+id/buttonCheckInCons">
+            app:layout_constraintEnd_toStartOf="@+id/buttonCheckInCons"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:src="@drawable/check_ico"
-                android:id="@+id/checkImg"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/giftImg"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:src="@drawable/gift_ico"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/checkImg"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:text="Check in"
+                app:layout_constraintEnd_toStartOf="@id/getBounusTexxt"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/getBounusTexxt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/intersemibold"
+                android:text="Get Bonus"
+                android:gravity="start"
+                android:layout_marginLeft="@dimen/_8sdp"
                 android:textColor="@color/white"
-                android:textSize="14sp"
-                android:fontFamily="@font/intersemibold"/>
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/adLeft"
+                app:layout_constraintStart_toEndOf="@id/giftImg"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
+                android:id="@+id/adLeft"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:layout_marginBottom="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_8sdp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ad_ico"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-               />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/getBounusTexxt"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonCheckInCons"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/rect_bck"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:paddingVertical="@dimen/_12sdp"
+            android:paddingHorizontal="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonBonusCons"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/checkImg"
+                android:layout_width="@dimen/_16sdp"
+                android:layout_height="@dimen/_16sdp"
+                android:src="@drawable/check_ico"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/intersemibold"
+                android:text="Check in"
+                android:gravity="start"
+                android:layout_marginLeft="@dimen/_8sdp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@id/checkImg"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_10sdp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ad_ico"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -184,11 +190,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/consJar"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/top_home_background"
-        android:layout_margin="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/consButtons"
         app:layout_constraintHeight_percent="0.2">
+
         <ImageView
             android:layout_width="@dimen/_60sdp"
             android:layout_height="wrap_content"
