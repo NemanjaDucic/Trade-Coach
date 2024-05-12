@@ -55,7 +55,6 @@ class ChatFragment: BaseFragment() {
         binding.tSendMessage.visibility = View.INVISIBLE
         binding.recChat.scrollToPosition((binding.recChat.adapter?.itemCount ?: 1) - 1)
 
-        if (progressDialog.isShowing) progressDialog.dismiss()
     }
 
     private fun listeners() {
@@ -63,6 +62,7 @@ class ChatFragment: BaseFragment() {
             if (!Utils.isETEmpty(binding.eMessage)) {
                 val message = Utils.getETText(binding.eMessage)
                 DatabaseProvider().sendMessage(message,SessionManager.getId())
+                Utils.animateButtonClick(binding.tSendMessage)
 
                 viewModel.displayChatMessage()
 

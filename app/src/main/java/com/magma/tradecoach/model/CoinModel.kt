@@ -1,7 +1,9 @@
 package com.magma.tradecoach.model
 
 data class CoinModel (
-    val id:String,
-    val symbol:String,
-    val name:String
-    )
+
+var id: String? = null,
+var name: MarketCoinModel? = null,
+var quantity: Int? = null,
+var symbol: String? = null
+)

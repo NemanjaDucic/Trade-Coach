@@ -15,8 +15,8 @@ object DataRepository {
                                 val homeItem = HomeItemModel(
                                         it.symbol.uppercase(),
                                         it.name,
-                                        "$ ${it.current_price}",
-                                        "${it.price_change_24h}%"
+                                        "$ ${it.currentPrice}",
+                                        "${it.priceChange24h}%"
                                 )
                                 homeDataList.add(homeItem)
                         }
@@ -27,8 +27,6 @@ object DataRepository {
         fun coinsData(): ArrayList<MarketCoinModel>? {
                 return  data as ArrayList<MarketCoinModel>
         }
-        fun getCoinsByGrowth():ArrayList<MarketCoinModel>?{
-                return data?.sortedBy { it.atl_change_percentage } as ArrayList<MarketCoinModel>
-        }
+
 
 }

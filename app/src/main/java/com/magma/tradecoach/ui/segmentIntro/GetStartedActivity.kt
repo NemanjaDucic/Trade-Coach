@@ -16,6 +16,8 @@ class GetStartedActivity:AppCompatActivity() {
         binding = ActivityGetStartedBinding.inflate(layoutInflater)
         setContentView(binding.root)
         listeners()
+        Utils.intent(this, WelcomeActivity::class.java)
+
     }
 
     private fun listeners() {

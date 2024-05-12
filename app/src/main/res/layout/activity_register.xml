@@ -133,6 +133,7 @@
             app:layout_constraintBottom_toTopOf="@+id/image_button"
             android:background="@drawable/edit_text_outline"
             android:enabled="false"
+            android:textColor="@color/blueGradiantEnd"
             android:layout_marginBottom="@dimen/_16sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

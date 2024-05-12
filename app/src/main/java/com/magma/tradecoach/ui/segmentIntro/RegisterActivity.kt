@@ -1,6 +1,8 @@
 package com.magma.tradecoach.ui.segmentIntro
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +16,7 @@ class RegisterActivity:AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityRegisterBinding
     private val utils = Utils
+    private var countryCode = "US"
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             finish()
@@ -25,6 +28,7 @@ class RegisterActivity:AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         onBackPressedDispatcher.addCallback(this, callback)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         listeners()
     }
 
@@ -32,7 +36,7 @@ class RegisterActivity:AppCompatActivity() {
         binding.imageButton.setOnClickListener {
             viewModel.register(
                 utils.getETText(binding.usernameET),
-                utils.getETText(binding.countryET),
+                countryCode,
                 utils.getETText(binding.emailET),
                 utils.getETText(binding.passwordET),
                 this
@@ -46,8 +50,9 @@ class RegisterActivity:AppCompatActivity() {
         binding.countyCodePicker.setShowPhoneCode(false)
         binding.countyCodePicker.setCcpDialogShowPhoneCode(false)
         binding.countyCodePicker.showFullName(true)
+        binding.countyCodePicker.contentColor = Color.WHITE
         binding.countyCodePicker.setOnCountryChangeListener {
-            binding.countryET.setText(binding.countyCodePicker.selectedCountryName)
+            countryCode = binding.countyCodePicker.selectedCountryName
         }
     }
 }

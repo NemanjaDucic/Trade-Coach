@@ -30,7 +30,7 @@ class MainViewModel @Inject constructor(
     var loginLiveData = _loginLiveData as LiveData<FirebaseUser?>
 
     private var _currentUser = MutableLiveData<UserDataModel?>()
-    var currentUser = _currentUser as LiveData<UserDataModel?>
+    val currentUser: LiveData<UserDataModel?> = _currentUser
     private var _initialCurrencyListLiveData = MutableLiveData<List<MarketCoinModel>>()
     var initialCurrencyListLiveData =
         _initialCurrencyListLiveData as LiveData<List<MarketCoinModel>>
@@ -44,8 +44,14 @@ class MainViewModel @Inject constructor(
     val blogPostsLiveData = _blogPostsLiveData as LiveData<ArrayList<BlogPostModel>>
 
     //Users Coins
-    private var _coinsLiveData = MutableLiveData<ArrayList<CoinInfoModel>?>()
-    var coinsLiveData = _coinsLiveData as LiveData<ArrayList<CoinInfoModel>?>
+    private var _coinsLiveData = MutableLiveData<ArrayList<CoinModel>?>()
+    var coinsLiveData = _coinsLiveData as LiveData<ArrayList<CoinModel>?>
+    //TOP COMBINED DATA
+    private var _combinedUsersLiveData = MutableLiveData<ArrayList<UserWithCombinedValue>?>()
+    var combinedUsersLiveData = _combinedUsersLiveData as LiveData<ArrayList<UserWithCombinedValue>?>
+
+    private var _topUsersLiveData = MutableLiveData<ArrayList<UserDataModel>?>()
+    var topUsersLiveData = _topUsersLiveData as LiveData<ArrayList<UserDataModel>>
     fun login(email: String, password: String, c: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             loginRegisterRepository.login(email, password, c)
@@ -81,23 +87,40 @@ class MainViewModel @Inject constructor(
             _currentUser.postValue(databaseRepository.getUser())
         }
     }
-
-    fun buyCoins(
-        user: UserDataModel, coin: MarketCoinModel, quantity: Int
-    ) {
+    fun getTopUsersCombined(){
         viewModelScope.launch {
-            databaseRepository.buyCoins(user, coin, quantity)
-        }
+            databaseRepository.fetchTopUsersWithCombinedValue { topUsers, error ->
+                if (error != null) {
+                    println("Error: $error")
+                } else {
+                    topUsers?.forEachIndexed { index, user ->
+                        _combinedUsersLiveData.postValue(topUsers as ArrayList<UserWithCombinedValue>?)
+                        println("Top ${index + 1} - Username: ${user.username}, Combined Value: ${user.combinedValue}")
+                    }
+                }
+            }        }
     }
 
-    fun sellCoins(
-        user: UserDataModel, coin: MarketCoinModel, quantity: Int
-    ) {
+//    fun buyCoins(
+//        user: UserDataModel, coin: MarketCoinModel, quantity: Int
+//    ) {
+//        viewModelScope.launch {
+//            databaseRepository.buyCoins(user, coin, quantity)
+//        }
+//    }
+
+//    fun sellCoins(
+//        user: UserDataModel, coin: MarketCoinModel, quantity: Int
+//    ) {
+//        viewModelScope.launch {
+//            databaseRepository.sellCoins(user, coin, quantity)
+//        }
+//    }
+    fun giveReward(magmaCoins:Double){
         viewModelScope.launch {
-            databaseRepository.sellCoins(user, coin, quantity)
+            databaseRepository.rewardMagmaCoins(magmaCoins)
         }
     }
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun createBlogPost(title: String, content: String, author: String) {
         viewModelScope.launch {
@@ -123,6 +146,14 @@ class MainViewModel @Inject constructor(
                     it
                 )
             })
+        }
+    }
+    fun getLeaderboard(){
+        viewModelScope.launch {
+
+            databaseRepository.fetchTopUsers { userDataModels, error ->
+                _topUsersLiveData.postValue(userDataModels as ArrayList<UserDataModel>)
+            }
         }
     }
 }

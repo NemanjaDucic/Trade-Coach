@@ -26,7 +26,7 @@
         android:id="@+id/name_image_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintHeight_percent="0.55"
         app:layout_constraintWidth_percent="0.8"
         android:src="@drawable/rect"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,23 +34,18 @@
         app:layout_constraintTop_toBottomOf="@id/name_text_view"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/name_button"
+        android:id="@+id/purchaseButton"
         android:layout_width="0dp"
         app:layout_constraintWidth_percent="0.8"
-        android:layout_height="@dimen/_32sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_marginBottom="10dp"
-
         android:layout_marginTop="@dimen/_5sdp"
         android:textColor="@color/white"
-        android:text="Button"
+        android:text="Purchase"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_image_view"
        android:background="@drawable/button"/>
-<ImageView
-    android:layout_width="0dp"
-    android:layout_height="@dimen/_11sdp"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/name_button"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

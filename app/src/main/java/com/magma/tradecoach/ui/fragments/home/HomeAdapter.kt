@@ -19,10 +19,13 @@ class HomeAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.symbol.text = items[position].symbol
-        holder.name.text = items[position].name
-        holder.value.text = items[position].value
-        holder.lastValue.text = items[position].update
+        with(holder){
+            symbol.text = items[position].symbol
+            name.text = items[position].name
+            value.text = items[position].value
+            lastValue.text = items[position].update
+        }
+
     }
 
     override fun getItemCount(): Int {

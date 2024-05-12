@@ -6,6 +6,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
+import com.magma.tradecoach.interfaces.SellCoinsCallback
 import com.magma.tradecoach.model.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
@@ -23,8 +25,71 @@ class DatabaseProvider @Inject constructor() {
         val chatMessage = ChatMessage(text, id, "", SessionManager.getUsername())
         databaseRef.child("chat").push().setValue(chatMessage)
     }
+    fun fetchTopUsersWithCombinedValue(completion: (List<UserWithCombinedValue>?, error: String?) -> Unit) {
+        val database = FirebaseDatabase.getInstance()
+        val reference = database.getReference("users")
+
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val users = mutableListOf<UserWithCombinedValue>()
+
+                dataSnapshot.children.forEach { userSnapshot ->
+                    val userData = userSnapshot.getValue(UserDataModel::class.java)
+
+                    userData?.let { user ->
+                        val currency = user.currency ?: 0.0
+                        val coinsValue = user.coins?.values?.sumByDouble { it.name?.currentPrice!!.times(it.quantity!!)  } ?: 0.0
+                        val combinedValue = currency + coinsValue
+
+                        users.add(UserWithCombinedValue(user.username ?: "", combinedValue))
+                    }
+                }
+
+                val sortedUsers = users.sortedByDescending { it.combinedValue }
+
+                val topUsers = sortedUsers.take(3)
+
+                completion(topUsers, null)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Call completion with error message
+                completion(null, "Error: ${databaseError.message}")
+            }
+        })
+    }
+    private var gson = Gson()
     suspend fun getUser(): UserDataModel {
         return getUserAsync().await()
+    }
+    fun fetchTopUsers(completion: (List<UserDataModel>?, error: String?) -> Unit) {
+        val database = FirebaseDatabase.getInstance()
+        val reference = database.getReference("users")
+
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val users = mutableListOf<UserDataModel>()
+
+                dataSnapshot.children.forEach { userSnapshot ->
+                    val user = userSnapshot.getValue(UserDataModel::class.java)
+                    user?.let { users.add(it) }
+                }
+
+                // Sort users by currency in descending order
+                val sortedUsers = users.sortedByDescending { it.currency }
+
+                // Get top 3 users
+                val topUsers = sortedUsers.take(3)
+
+                // Call completion with top users
+                completion(topUsers, null)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Call completion with error message
+                completion(null, "Error: ${databaseError.message}")
+            }
+        })
     }
     private fun getUserAsync(): Deferred<UserDataModel> {
         val deferred = CompletableDeferred<UserDataModel>()
@@ -32,9 +97,10 @@ class DatabaseProvider @Inject constructor() {
             ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val userDataModel = dataSnapshot.getValue(UserDataModel::class.java)
+                var premiumStatus = (dataSnapshot.child("isPremium"))
                 if (userDataModel != null) {
+                    userDataModel.isPremium = premiumStatus.value.toString().toBoolean()
                     deferred.complete(userDataModel)
-                    println(userDataModel)
                 } else {
                     deferred.completeExceptionally(Exception("Failed to retrieve user data"))
                 }
@@ -49,82 +115,156 @@ class DatabaseProvider @Inject constructor() {
     }
 
 
-    fun buyCoins(user: UserDataModel,coin:MarketCoinModel, quantity: Int): Boolean {
+    fun buyCoins(user: UserDataModel, coin: MarketCoinModel, quantity: Int): Boolean {
+        println(user?.isPremium.toString() + "ja sam debil")
         val totalCost = coin.currentPrice * quantity
         return if (user.currency!! >= totalCost) {
             user.currency = user.currency?.minus(totalCost)
-            if (user.coins != null) {
-                for (i in 1..quantity) {
-                    user.coins.add(CoinModel(coin.id, coin.symbol, coin.name))
+
+            val userReference = FirebaseDatabase.getInstance().getReference("users").child(user.uid!!)
+            val coinsReference = userReference.child("coins")
+
+            val coinId = coin.id
+
+            coinsReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val existingCoins = dataSnapshot.children.mapNotNull { it.getValue(CoinModel::class.java) }
+
+                    val existingCoin = existingCoins.find { it.id == coinId }
+
+                    if (existingCoin != null) {
+                        // Increase quantity of existing coin
+                        println(existingCoin)
+
+                        val newQuantity = existingCoin.quantity?.plus(quantity)
+                        coinsReference.child(existingCoin.id!!).child("quantity").setValue(newQuantity)
+                    } else {
+                        // Add new coin
+                        val newIndex = existingCoins.size
+                        val newCoin = CoinModel(coinId, coin,quantity,coin.symbol)
+                        coinsReference.child(coinId).setValue(newCoin)
+                    }
+                    user.currency?.let { updateUserFunds(user.uid!!, it) }
+                    println("Successfully bought $quantity ${coin.name}(s) for $totalCost. Remaining balance: ${user.currency}")
                 }
-            }
-            println("Successfully bought $quantity ${coin.name}(s) for $totalCost . Remaining balance: ${user.currency}")
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    println("Failed to read user coins: ${databaseError.toException()}")
+                }
+            })
+
             true
         } else {
             println("Insufficient funds to buy $quantity ${coin.name}(s).")
             false
         }
     }
-    fun sellCoins(user: UserDataModel, coin: MarketCoinModel, quantity: Int): Boolean {
-        val totalEarnings = coin.currentPrice * quantity
-        val coinQuantity = user.coins?.count { it.name == coin.name } ?: 0
 
-        return if (coinQuantity >= quantity) {
-            user.currency = (user.currency ?: 0.0) + totalEarnings
-            user.coins?.let {
-                for (i in 1..quantity) {
-                    val coinIndex = it.indexOfFirst { it.name == coin.name }
-                    if (coinIndex != -1) {
-                        it.removeAt(coinIndex)
+    fun updateUserFunds(id:String,money:Double){
+        databaseRef.child("users").child(id).child(
+                "currency").setValue(money)
+    }
+
+    fun rewardMagmaCoins(points:Double) {
+        databaseRef.child("users").child(SessionManager.getId()).child("currency").get().addOnSuccessListener { dataSnapshot ->
+            val value = dataSnapshot.getValue(Double::class.java)
+            if (value != null) {
+                // Increment the value by 1
+                val updatedValue = value + points
+                // Update the value in the database
+                databaseRef.child("users").child(SessionManager.getId()).child("currency").setValue(updatedValue)
+                    .addOnSuccessListener {
+                        println("Value incremented successfully.")
                     }
+                    .addOnFailureListener { e ->
+                        println("Failed to increment value: $e")
+                    }
+            } else {
+                println("Value is null.")
+            }
+        }.addOnFailureListener { e ->
+            println("Failed to read value: $e")
+        }
+    }
+
+    fun sellCoins(user: UserDataModel, coin: MarketCoinModel, quantity: Int, callback: SellCoinsCallback) {
+        val userReference = FirebaseDatabase.getInstance().getReference("users").child(user.uid!!)
+        val coinsReference = userReference.child("coins")
+
+        val coinId = coin.id
+
+        coinsReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val existingCoins = dataSnapshot.children.mapNotNull { it.getValue(CoinModel::class.java) }
+
+                val existingCoin = existingCoins.find { it.id == coinId }
+
+                if (existingCoin != null && existingCoin.quantity!! >= quantity) {
+                    // Calculate total earning from selling coins
+                    val totalEarning = coin.currentPrice * quantity
+
+                    // Add earnings to user's currency
+                    user.currency = user.currency?.plus(totalEarning)
+
+                    // Update user's currency in database
+                    user.currency?.let { updateUserFunds(user.uid!!, it) }
+
+                    // Decrease quantity of existing coin
+                    val newQuantity = existingCoin.quantity!!.minus(quantity)
+                    coinsReference.child(existingCoin.id!!).child("quantity").setValue(newQuantity)
+
+                    callback.onSellSuccess(totalEarning)
+                } else {
+                    callback.onSellFailure("Insufficient quantity of ${coin.name}(s) to sell.")
                 }
             }
 
-            println("Successfully sold $quantity ${coin.name}(s) for $totalEarnings. New balance: ${user.currency}")
-            true
-        } else {
-            println("Insufficient ${coin.name}(s) to sell.")
-            false
-        }
-    }
-    fun tradeCoins(
-        user: UserDataModel,
-        sourceCoin: MarketCoinModel,
-        sourceQuantity: Int,
-        targetCoin: MarketCoinModel,
-        targetQuantity: Int
-    ): Boolean {
-        val sourceTotalCost = sourceCoin.currentPrice * sourceQuantity
-
-        if (user.coins?.count { it.name == sourceCoin.name } ?: 0 < sourceQuantity) {
-            println("Insufficient ${sourceCoin.name}(s) to trade.")
-            return false
-        }
-
-        val targetTotalCost = targetCoin.currentPrice * targetQuantity
-
-        if (user.currency!! < targetTotalCost) {
-            println("Insufficient funds to receive $targetQuantity ${targetCoin.name}(s).")
-            return false
-        }
-
-
-        val sellSuccess = sellCoins(user, sourceCoin, sourceQuantity)
-
-        if (sellSuccess) {
-            val buySuccess = buyCoins(user, targetCoin, targetQuantity)
-
-            if (buySuccess) {
-                println("Successfully traded $sourceQuantity ${sourceCoin.name}(s) for $targetQuantity ${targetCoin.name}(s).")
-                return true
-            } else {
-                buyCoins(user, sourceCoin, sourceQuantity)
-                println("Failed to complete the trade. Reverted the transaction.")
+            override fun onCancelled(databaseError: DatabaseError) {
+                callback.onSellFailure("Failed to read user coins: ${databaseError.toException()}")
             }
-        }
-
-        return false
+        })
     }
+
+//    }
+
+//    fun tradeCoins(
+//        user: UserDataModel,
+//        sourceCoin: MarketCoinModel,
+//        sourceQuantity: Int,
+//        targetCoin: MarketCoinModel,
+//        targetQuantity: Int
+//    ): Boolean {
+//        val sourceTotalCost = sourceCoin.currentPrice * sourceQuantity
+//
+//        if (user.coins?.count { it.value.name == sourceCoin.name } ?: 0 < sourceQuantity) {
+//            println("Insufficient ${sourceCoin.name}(s) to trade.")
+//            return false
+//        }
+//
+//        val targetTotalCost = targetCoin.currentPrice * targetQuantity
+//
+//        if (user.currency!! < targetTotalCost) {
+//            println("Insufficient funds to receive $targetQuantity ${targetCoin.name}(s).")
+//            return false
+//        }
+
+
+//        val sellSuccess = sellCoins(user, sourceCoin, sourceQuantity)
+
+//        if (sellSuccess) {
+//            val buySuccess = buyCoins(user, targetCoin, targetQuantity)
+//
+//            if (buySuccess) {
+//                println("Successfully traded $sourceQuantity ${sourceCoin.name}(s) for $targetQuantity ${targetCoin.name}(s).")
+//                return true
+//            } else {
+//                buyCoins(user, sourceCoin, sourceQuantity)
+//                println("Failed to complete the trade. Reverted the transaction.")
+//            }
+//        }
+
+//        return false
+//    }
     fun generateRandomUUID(): String {
         val randomUUID = UUID.randomUUID()
         return randomUUID.toString()
@@ -183,5 +323,26 @@ class DatabaseProvider @Inject constructor() {
         }
         databaseRef.child("blogPosts").addValueEventListener(eventListener)
     }
+    fun increaseCurrencyForUser(amount: Int,callback:(Boolean)-> Unit) {
 
+        databaseRef.child("users").child(SessionManager.getId()).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val currentCurrency = snapshot.child("currency").getValue(Int::class.java) ?: 0
+
+                val newCurrency = currentCurrency + amount
+
+                databaseRef.child("users").child(SessionManager.getId()).child("currency").setValue(newCurrency)
+                    .addOnSuccessListener {
+                        callback.invoke(true)
+                    }
+                    .addOnFailureListener { e ->
+                        callback.invoke(false)
+                    }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                println("Database error: ${error.message}")
+            }
+        })
+    }
 }

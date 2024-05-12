@@ -1,5 +1,10 @@
 package com.magma.tradecoach.utilities
 
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -11,8 +16,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.os.*
 import android.view.View
-import android.view.animation.AlphaAnimation
-import android.view.animation.TranslateAnimation
+import android.view.animation.*
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +26,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.FirebaseDatabase
 import com.magma.tradecoach.R
 import com.magma.tradecoach.model.UserDataModel
 import io.ak1.BubbleTabBar
@@ -32,8 +37,7 @@ import java.util.*
 object Utils {
     private var context: Context? = null
     private var progressDialog: ProgressDialog? = null
-    private var alertDialog: AlertDialog? = null
-
+    var didShowLogin = false
     fun init(context: Context) {
         this.context = context.applicationContext
     }
@@ -142,7 +146,7 @@ object Utils {
     }
 
     fun setRecyclerTwoSpan(recycler: RecyclerView, adapter: RecyclerView.Adapter<*>) {
-        val layoutManager = GridLayoutManager(context, 2)
+        val layoutManager = GridLayoutManager(context, 7)
         recycler.setHasFixedSize(true)
         recycler.layoutManager = layoutManager
         recycler.adapter = adapter
@@ -188,5 +192,77 @@ object Utils {
         view.startAnimation(animate)
         view.visibility = View.INVISIBLE
     }
+     fun startPulseAnimation(thisView: View) {
+         val pulseAnimator = ObjectAnimator.ofPropertyValuesHolder(
+             thisView,
+             PropertyValuesHolder.ofFloat(View.SCALE_X, 1.1f, 0.8f),
+             PropertyValuesHolder.ofFloat(View.SCALE_Y, 1.1f, 0.8f)
+         )
+
+         pulseAnimator.duration = 1000 // Set the total duration of the animation
+         pulseAnimator.repeatCount = ValueAnimator.INFINITE // Infinite repetition
+         pulseAnimator.repeatMode = ValueAnimator.REVERSE // Reverse the animation on each repetition
+         pulseAnimator.interpolator = AccelerateDecelerateInterpolator()
+
+         pulseAnimator.start()
+     }
+
+     fun animateButtonClick(view:View) {
+        // Scale animation
+        val scaleX = ObjectAnimator.ofFloat(view, View.SCALE_X, 1.0f, 0.9f, 1.0f)
+        val scaleY = ObjectAnimator.ofFloat(view, View.SCALE_Y, 1.0f, 0.9f, 1.0f)
+
+        // Alpha (opacity) animation
+        val alpha = ObjectAnimator.ofFloat(view, View.ALPHA, 1.0f, 0.7f, 1.0f)
+
+        // Combine animations into a set
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(scaleX, scaleY, alpha)
+        animatorSet.duration = 300 // Set the total duration of the animation
+        animatorSet.interpolator = AccelerateDecelerateInterpolator()
+
+        // Start the animation
+        animatorSet.start()
+    }
     private const val KILOBYTE = 1024
+    fun updateFirebaseUserData(userId: String, consecutiveDays: Int) {
+        val databaseRef = FirebaseDatabase.getInstance().reference
+
+        databaseRef.child("users").child(userId).child("streak").setValue(consecutiveDays)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                } else {
+                    println("Firebase" +  "Error updating streak in Firebase")
+                }
+            }
+    }
+    fun animateClick(view: View, scaleFactor: Float, duration: Long) {
+        // Define the initial and final scale factors
+        val initialScaleX = view.scaleX
+        val initialScaleY = view.scaleY
+        val finalScaleX = initialScaleX * scaleFactor
+        val finalScaleY = initialScaleY * scaleFactor
+
+        // Animate the view to increase its size
+        val scaleXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, initialScaleX, finalScaleX)
+        val scaleYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, initialScaleY, finalScaleY)
+
+        // Combine the animations
+        val animatorSet = AnimatorSet()
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator)
+        animatorSet.duration = duration
+        animatorSet.start()
+
+        // Reverse the animation to return to the original size
+        animatorSet.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(p0: android.animation.Animator) {
+                val reverseScaleXAnimator = ObjectAnimator.ofFloat(view, View.SCALE_X, finalScaleX, initialScaleX)
+                val reverseScaleYAnimator = ObjectAnimator.ofFloat(view, View.SCALE_Y, finalScaleY, initialScaleY)
+                val reverseAnimatorSet = AnimatorSet()
+                reverseAnimatorSet.playTogether(reverseScaleXAnimator, reverseScaleYAnimator)
+                reverseAnimatorSet.duration = duration
+                reverseAnimatorSet.start()
+            }
+        })
+    }
 }

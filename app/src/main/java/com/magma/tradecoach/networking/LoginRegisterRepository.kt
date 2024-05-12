@@ -2,6 +2,7 @@ package com.magma.tradecoach.networking
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -47,7 +48,7 @@ class LoginRegisterRepository @Inject constructor() {
 
 suspend fun register(username: String, country: String, email: String, password: String, c: Context): Boolean {
     return try {
-        val auth = FirebaseAuth.getInstance()
+
 
         val result = withContext(Dispatchers.IO) {
             auth.createUserWithEmailAndPassword(email, password).await()
@@ -56,7 +57,7 @@ suspend fun register(username: String, country: String, email: String, password:
         if (result.user != null) {
             val uid = result.user?.uid
             println(uid)
-            val user = UserDataModel(username, uid, email, country, 100.0)
+            val user = UserDataModel(username =username,uid= uid, emailAddress = email,country = country, currency =  100.0)
             uid?.let { reference.child(it).setValue(user) }
             singleton.saveBool(Constants.LOGGED_KEY, true)
             val intent = Intent(c, MainActivity::class.java)
@@ -64,13 +65,14 @@ suspend fun register(username: String, country: String, email: String, password:
 
             true
         } else {
-            Utils.displayToast("Registration Failed")
+            Toast.makeText(c,"Registration Failed",Toast.LENGTH_SHORT).show()
             println(result)
             false
         }
     } catch (e: Exception) {
         println(e)
-        Utils.displayToast("Registration Failed")
+        Toast.makeText(c,"Registration Failed",Toast.LENGTH_SHORT).show()
+
         false
     }
 }

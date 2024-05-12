@@ -32,12 +32,15 @@
             <ImageView
                 android:layout_width="0dp"
                 android:id="@+id/imageWelcome"
-                android:layout_height="wrap_content"
+                app:looping="true"
+                app:layout_constraintHeight_percent="0.8"
+                android:layout_height="0dp"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/onboard1"
                 app:layout_constraintBottom_toTopOf="@id/tCaptionWelcome"/>
+
             <TextView
                 android:id="@+id/tCaptionWelcome"
                 app:layout_constraintStart_toStartOf="parent"

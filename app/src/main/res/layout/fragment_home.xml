@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:id="@+id/titleTV"
+        android:layout_marginTop="@dimen/_10sdp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -13,10 +14,23 @@
         app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/interbold"
         android:textColor="@color/white"
-        android:textSize="26sp"
+        android:textSize="@dimen/_16sdp"
         android:textAlignment="center"
-        android:layout_margin="@dimen/_16sdp"
         android:text="@string/home"/>
+    <TextView
+        android:id="@+id/usernameTV"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/consUserLoginDays"
+        app:layout_constraintTop_toBottomOf="@id/titleTV"
+        android:fontFamily="@font/interregular"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/_16sdp"
+        android:textAlignment="center"
+        />
     <ImageView
         android:src="@drawable/mcoin"
         android:layout_marginStart="@dimen/_5sdp"
@@ -30,24 +44,80 @@
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_20sdp"
         android:scaleType="fitXY"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:src="@drawable/pbank"
+        app:layout_constraintBottom_toBottomOf="@+id/titleTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:id="@+id/consUserLoginDays"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:background="@drawable/top_home_background"
+    app:layout_constraintHeight_percent="0.07"
+    android:layout_margin="@dimen/_10sdp"
+
+    app:layout_constraintTop_toBottomOf="@+id/usernameTV"
+    app:layout_constraintBottom_toTopOf="@id/lastVisitCons">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:fontFamily="@font/interregular"
+        android:textSize="18sp"
+        android:id="@+id/loginDayText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Trade coach streak"
+        android:textColor="@color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textSize="18sp"
+
+        app:layout_constraintEnd_toStartOf="@id/dateDotText"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="@dimen/_10sdp"
+        android:id="@+id/dayText"
+        android:fontFamily="@font/interregular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Day:"
+        android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/dateDotText"
+        android:background="@drawable/date_dot"
+        android:layout_width="@dimen/_30sdp"
+        android:textColor="@color/white"
+        android:layout_margin="@dimen/_5sdp"
+        android:text="1"
+        android:textAlignment="center"
+        android:paddingTop="@dimen/_5sdp"
+        android:textSize="18sp"
+        android:fontFamily="@font/interbold"
+        android:layout_height="@dimen/_30sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/pbank"
-        android:layout_marginEnd="@dimen/_24sdp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/rectangle_blue"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_margin="@dimen/_20sdp"
-        android:id="@+id/lastVisitCons"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
         android:layout_height="0dp"
-        app:layout_constraintVertical_chainStyle="packed"
+        android:id="@+id/lastVisitCons"
         android:background="@drawable/top_home_background"
+        android:layout_marginTop="@dimen/_18sdp"
+        android:layout_marginBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@id/consButtons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleTV"
-        app:layout_constraintHeight_percent="0.3">
+        app:layout_constraintTop_toBottomOf="@id/consUserLoginDays">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,6 +144,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintTop_toBottomOf="@id/lastVisitCons"
         android:layout_width="0dp"
         android:id="@+id/consButtons"
@@ -181,11 +253,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="@dimen/_6sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/consJar"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/top_home_background"
-        android:layout_margin="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/consButtons"
         app:layout_constraintHeight_percent="0.2">
@@ -209,19 +283,37 @@
             android:textColor="@color/white"
             android:text="Explore MGM investments for potential  future growth and returns!"
             android:lines="2"/>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer"
+                android:layout_width="0dp"
+                app:shimmer_base_alpha="0.6"
+                app:shimmer_repeat_delay="1000"
+                app:shimmer_intensity="0.8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/premiumButton"
+                app:layout_constraintTop_toBottomOf="@id/investTV"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/_8sdp"
+                app:shimmer_duration="2000"
+                app:shimmer_auto_start="true"
+                android:background="@drawable/invest_image"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/investButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/premiumButton"
+                    app:layout_constraintTop_toBottomOf="@id/investTV"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:src="@drawable/invest_image"/>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/investButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/premiumButton"
-            app:layout_constraintTop_toBottomOf="@id/investTV"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:src="@drawable/invest_image"/>
-        <ImageView
-            android:layout_width="0dp"
-            app:layout_constraintEnd_toStartOf="@id/investButton"
+            app:layout_constraintEnd_toStartOf="@id/shimmer"
             android:layout_height="wrap_content"
             android:src="@drawable/premium_button"
             android:id="@+id/premiumButton"

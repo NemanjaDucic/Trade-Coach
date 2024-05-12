@@ -1,26 +1,26 @@
 package com.magma.tradecoach.ui.fragments.community.feed
 
-import android.os.Build
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.magma.tradecoach.R
 import com.magma.tradecoach.databinding.FragmentFeedBinding
+import com.magma.tradecoach.di.observeUserData
 import com.magma.tradecoach.interfaces.BlogPostClickedInterface
 import com.magma.tradecoach.model.BlogPostModel
+import com.magma.tradecoach.model.UserDataModel
+import com.magma.tradecoach.utilities.BaseFragment
 import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
-class FeedFragment:Fragment(),BlogPostClickedInterface {
+class FeedFragment:BaseFragment(),BlogPostClickedInterface {
     private lateinit var adapter :FeedAdapter
     private lateinit var binding: FragmentFeedBinding
     private val viewModel: MainViewModel by viewModels()
@@ -39,18 +39,22 @@ class FeedFragment:Fragment(),BlogPostClickedInterface {
     private fun init() {
         adapter = FeedAdapter(arrayListOf(),this)
         Utils.setRecycler(binding.feedRV,adapter)
-
         viewModel.getUserData()
         viewModel.getPosts()
-        viewModel.blogPostsLiveData.observe(this) {
+        with(viewModel){
+            observeUserData(currentUser,::onUserDataLoaded)
+        }
+
+        viewModel.blogPostsLiveData.observe(viewLifecycleOwner) {
             adapter.setData(it)
         }
+
 
         listeners()
     }
     private fun listeners(){
         binding.createPostButton.setOnClickListener {
-            viewModel.currentUser.observe(this){
+            viewModel.currentUser.observe(viewLifecycleOwner){
                 if (it == null) return@observe
 
                 if (Utils.isPremiumUser(it)){
@@ -78,6 +82,7 @@ class FeedFragment:Fragment(),BlogPostClickedInterface {
         binding.icClose.setOnClickListener {
             hideOverlay()
         }
+
     }
 
     private fun showOverlay(toPost: Boolean) {
@@ -96,7 +101,7 @@ class FeedFragment:Fragment(),BlogPostClickedInterface {
         val darkOverlay = activity?.findViewById<View>(R.id.darkOverlay)
         Utils.animateViewToBottom(binding.createPostView)
         darkOverlay?.isVisible = false
-
+        binding.createTitle.text = "Create Post"
         binding.publishButton.isVisible = true
         binding.titleTV.isEnabled = true
         binding.contentTV.isEnabled = true
@@ -104,13 +109,17 @@ class FeedFragment:Fragment(),BlogPostClickedInterface {
         binding.contentTV.setText("")
     }
 
+    @SuppressLint("SetTextI18n")
     override fun postClicked(post: BlogPostModel) {
         showOverlay(false)
-
+        binding.createTitle.text = "Post"
         binding.publishButton.isVisible = false
         binding.titleTV.setText(post.postTitle)
         binding.contentTV.setText(post.postContent)
         binding.titleTV.isEnabled = false
         binding.contentTV.isEnabled = false
+    }
+    private fun onUserDataLoaded(user:UserDataModel?){
+
     }
 }

@@ -7,21 +7,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.magma.tradecoach.R
-import com.magma.tradecoach.model.LeaderboardModel
+import com.magma.tradecoach.model.UserWithCombinedValue
 
 class LeaderboardAdapter (
-    var items :ArrayList<LeaderboardModel>
+    var items :ArrayList<UserWithCombinedValue>
 ) : RecyclerView.Adapter<LeaderboardAdapter.ViewHolder>() {
-
+    var rankPos = arrayListOf("1","2","3")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_leaderboard, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.rank.text = items[position].rank.toString()
-        holder.name.text = items[position].name
-        holder.points.text = items[position].points.toString()
+        holder.rank.text = rankPos[position]
+        holder.name.text = items[position].username
+        holder.points.text = getFormatedString(items[position].combinedValue)
     }
 
     override fun getItemCount(): Int {
@@ -35,8 +35,11 @@ class LeaderboardAdapter (
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(data: ArrayList<LeaderboardModel>) {
+    fun setData(data: ArrayList<UserWithCombinedValue>) {
         items = data
         notifyDataSetChanged()
+    }
+    private fun getFormatedString(number:Double):String{
+        return String.format("%.2f", number)
     }
 }

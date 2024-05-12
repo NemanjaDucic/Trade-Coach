@@ -15,6 +15,7 @@ import com.magma.tradecoach.ui.fragments.currencies.CurrenciesFragment
 import com.magma.tradecoach.ui.fragments.dedication.DedicationFragment
 import com.magma.tradecoach.ui.fragments.home.HomeFragment
 import com.magma.tradecoach.utilities.ConsecutiveDayChecker
+import com.magma.tradecoach.utilities.PrefSingleton
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         init()
     }
 
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.initialCurrencyListLiveData.observe(this) { value ->
             updateUIWithData(value)
         }
-        ConsecutiveDayChecker(this).onUserLogin()
+        ConsecutiveDayChecker(this).onUserLogin(PrefSingleton.instance.getString("id"))
         binding.bubbleTabBar.addBubbleListener { id ->
             var selectedFragment: Fragment? = null
             when (id) {
@@ -67,4 +69,7 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, HomeFragment())
             .commit()
     }
+
+
+
 }

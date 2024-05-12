@@ -48,4 +48,10 @@ data class MarketCoinModel(
     val totalSupply: Double,
     @SerializedName("total_volume")
     val totalVolume: Double
-)
+){
+    // No-argument constructor
+    constructor() : this(
+        0.0, 0.0, "", 0.0, 0.0, "", 0.0, 0.0, 0L, 0.0, "", "", "", 0.0, 0L,
+        0.0, 0.0, 0, Any(), "", 0.0, 0.0, Roi(null), "", 0.0, 0.0
+    )
+}
