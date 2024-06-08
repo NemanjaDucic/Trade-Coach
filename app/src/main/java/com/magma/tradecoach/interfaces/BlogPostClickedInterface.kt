@@ -6,6 +6,3 @@ interface BlogPostClickedInterface {
     fun postClicked(post: BlogPostModel)
 }
 
-interface BlogPostCreatedInterface {
-    fun blogPostCreated()
-}
