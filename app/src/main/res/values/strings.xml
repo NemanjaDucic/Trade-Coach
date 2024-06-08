@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Trade-Coach</string>
-    <string name="register">REGISTER</string>
-    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="login">Already have an account? <b>Login!</b></string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
