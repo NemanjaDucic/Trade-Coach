@@ -80,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@drawable/edit_text_outline"
             android:textColor="@color/white"
-            android:textCursorDrawable="@drawable/cursor_drawbale"
+            android:textCursorDrawable="@drawable/cursor_drawable"
             android:textColorHint="@color/silver"
             app:layout_constraintTop_toBottomOf="@id/createTitle"/>
         <EditText
@@ -97,7 +97,7 @@
             android:background="@drawable/edit_text_outline"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/titleTV"
-            android:textCursorDrawable="@drawable/cursor_drawbale"
+            android:textCursorDrawable="@drawable/cursor_drawable"
             android:textColorHint="@color/silver"
             />
         <TextView

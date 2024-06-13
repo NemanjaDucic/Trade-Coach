@@ -63,7 +63,8 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun register(username: String, country: String, email: String, password: String, c: Context) {
+    fun register(username: String?, country: String?, email: String?, password: String?, c: Context) {
+        if (username.isNullOrEmpty() || country.isNullOrEmpty() || email.isNullOrEmpty() || password.isNullOrEmpty()) return
         viewModelScope.launch {
             registerMutableData.postValue(
                 loginRegisterRepository.register(username, country, email, password, c)

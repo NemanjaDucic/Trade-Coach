@@ -95,7 +95,7 @@
         android:id="@+id/dismissButton"/>
     <EditText
         android:paddingStart="@dimen/_8sdp"
-        android:textCursorDrawable="@drawable/cursor_drawbale"
+        android:textCursorDrawable="@drawable/cursor_drawable"
         android:layout_marginStart="@dimen/_20sdp"
         android:textColor="@color/white"
         android:layout_marginEnd="@dimen/_20sdp"
