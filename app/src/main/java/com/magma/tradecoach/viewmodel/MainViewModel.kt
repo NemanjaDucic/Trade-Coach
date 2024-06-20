@@ -58,7 +58,9 @@ class MainViewModel @Inject constructor(
                 .fold({
                     _loginLiveData.postValue(it)
                 }) {
+
                     _loginLiveData.postValue(null)
+
                 }
         }
     }
@@ -148,6 +150,12 @@ class MainViewModel @Inject constructor(
                 )
             })
         }
+    }
+    fun updateAddsWatched(){
+        databaseRepository.updateAddsWatched()
+    }
+    fun updateNumberOfTransactions(){
+    databaseRepository.updateTransactiondByUser()
     }
     fun getLeaderboard(){
         viewModelScope.launch {

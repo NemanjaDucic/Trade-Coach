@@ -41,6 +41,8 @@
             android:exported="false"/>
         <activity android:name=".ui.segmentPurchase.PurchaseActivity"
             android:exported="false"/>
+        <activity android:name=".ui.segmentIntro.ForgotPasswordActivity"
+            android:exported="false"/>
     </application>
 
 

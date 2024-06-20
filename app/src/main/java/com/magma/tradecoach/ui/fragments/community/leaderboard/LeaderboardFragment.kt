@@ -7,14 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.magma.tradecoach.databinding.FragmentLeaderboardBinding
 import com.magma.tradecoach.model.UserWithCombinedValue
+import com.magma.tradecoach.utilities.BaseFragment
 import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LeaderboardFragment:Fragment() {
+class LeaderboardFragment:BaseFragment() {
     private lateinit var adapter: LeaderboardAdapter
     private lateinit var binding: FragmentLeaderboardBinding
 
@@ -35,7 +37,8 @@ class LeaderboardFragment:Fragment() {
         viewModel.getLeaderboard()
         viewModel.getTopUsersCombined()
         adapter = LeaderboardAdapter(arrayListOf())
-        Utils.setRecycler(binding.leaderboardRV, adapter)
+        binding.leaderboardRV.adapter = adapter
+        binding.leaderboardRV.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         viewModel.topUsersLiveData.observe(viewLifecycleOwner){ userArray ->
             with(binding){
                 tvMid.text = userArray[0].username + "\n" + getTwoDigitString(userArray[0].currency!!)
@@ -46,8 +49,8 @@ class LeaderboardFragment:Fragment() {
         }
         viewModel.combinedUsersLiveData.observe(viewLifecycleOwner){
             users ->
+            adapter.setData(users ?: arrayListOf())
 
-            adapter.setData(users as ArrayList<UserWithCombinedValue>)
         }
     }
     private fun getTwoDigitString(number:Double):String{

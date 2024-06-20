@@ -1,10 +1,13 @@
 package com.magma.tradecoach.utilities
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.MutableData
+import com.google.firebase.database.Transaction
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.magma.tradecoach.interfaces.SellCoinsCallback
@@ -21,6 +24,8 @@ import kotlin.coroutines.suspendCoroutine
 
 class DatabaseProvider @Inject constructor() {
     private val databaseRef =  FirebaseDatabase.getInstance().reference
+    private val gson = Gson()
+
     fun sendMessage(text: String?,id:String) {
         val chatMessage = ChatMessage(text, id, "", SessionManager.getUsername())
         databaseRef.child("chat").push().setValue(chatMessage)
@@ -34,20 +39,30 @@ class DatabaseProvider @Inject constructor() {
                 val users = mutableListOf<UserWithCombinedValue>()
 
                 dataSnapshot.children.forEach { userSnapshot ->
-                    val userData = userSnapshot.getValue(UserDataModel::class.java)
+                    try {
+                        val userData = userSnapshot.getValue(UserDataModel::class.java)
 
-                    userData?.let { user ->
-                        val currency = user.currency ?: 0.0
-                        val coinsValue = user.coins?.values?.sumByDouble { it.name?.currentPrice!!.times(it.quantity!!)  } ?: 0.0
-                        val combinedValue = currency + coinsValue
+                        userData?.let { user ->
+                            val currency = user.currency ?: 0.0
+                            val coinsValue = user.coins?.values?.sumByDouble { it.name?.currentPrice!!.times(it.quantity!!)  } ?: 0.0
+                            val combinedValue = currency + coinsValue
 
-                        users.add(UserWithCombinedValue(user.username ?: "", combinedValue))
+                            users.add(UserWithCombinedValue(user.username ?: "", combinedValue))
+                        } ?: Log.e("FirebaseError", "userData is null: ${userSnapshot.value}")
+                    } catch (e: Exception) {
+                        // Log the exception and the raw data that caused the issue
+                        Log.e("FirebaseError", "Error creating UserDataModel: ${userSnapshot.value}", e)
                     }
                 }
 
                 val sortedUsers = users.sortedByDescending { it.combinedValue }
 
                 val topUsers = sortedUsers.take(3)
+
+                // Log top users
+                topUsers.forEachIndexed { index, user ->
+                    Log.i("TopUsers", "Top ${index + 1} - Username: ${user.username}, Combined Value: ${user.combinedValue}")
+                }
 
                 completion(topUsers, null)
             }
@@ -58,7 +73,72 @@ class DatabaseProvider @Inject constructor() {
             }
         })
     }
-    private var gson = Gson()
+    fun updateAddsWatched() {
+
+        val addsWatchedRef = databaseRef.child("users").child(SessionManager.getId()).child("addsWatched")
+
+        addsWatchedRef.runTransaction(object : Transaction.Handler {
+            override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                // Retrieve the current value of addsWatched
+                val currentCount = mutableData.getValue(Int::class.java)
+
+                // If the value does not exist, initialize it to 1, else increment by 1
+                if (currentCount == null) {
+                    mutableData.value = 1
+                } else {
+                    mutableData.value = currentCount + 1
+                }
+
+                return Transaction.success(mutableData)
+            }
+
+            override fun onComplete(
+                error: DatabaseError?,
+                committed: Boolean,
+                currentData: DataSnapshot?
+            ) {
+                // Handle completion
+                if (error != null) {
+                    println("Transaction failed: ${error.message}")
+                } else if (committed) {
+                    println("Transaction successful!")
+                }
+            }
+        })
+    }
+
+    fun updateTransactiondByUser(){
+       val transRef = databaseRef.child("users").child(SessionManager.getId()).child("transactionsCompleted")
+        transRef.runTransaction(object : Transaction.Handler {
+            override fun doTransaction(mutableData: MutableData): Transaction.Result {
+                // Retrieve the current value of addsWatched
+                val currentCount = mutableData.getValue(Int::class.java)
+
+                // If the value does not exist, initialize it to 1, else increment by 1
+                if (currentCount == null) {
+                    mutableData.value = 1
+                } else {
+                    mutableData.value = currentCount + 1
+                }
+
+                return Transaction.success(mutableData)
+            }
+
+            override fun onComplete(
+                error: DatabaseError?,
+                committed: Boolean,
+                currentData: DataSnapshot?
+            ) {
+                // Handle completion
+                if (error != null) {
+                    println("Transaction failed: ${error.message}")
+                } else if (committed) {
+                    println("Transaction successful!")
+                }
+            }
+        })
+    }
+
     suspend fun getUser(): UserDataModel {
         return getUserAsync().await()
     }
@@ -71,8 +151,13 @@ class DatabaseProvider @Inject constructor() {
                 val users = mutableListOf<UserDataModel>()
 
                 dataSnapshot.children.forEach { userSnapshot ->
-                    val user = userSnapshot.getValue(UserDataModel::class.java)
-                    user?.let { users.add(it) }
+                    try {
+                        val user = userSnapshot.getValue(UserDataModel::class.java)
+                        user?.let { users.add(it) }
+                    } catch (e: Exception) {
+                        // Log the exception and the raw data that caused the issue
+                        Log.e("FirebaseError", "Error deserializing user: ${userSnapshot.value}", e)
+                    }
                 }
 
                 // Sort users by currency in descending order
@@ -97,9 +182,9 @@ class DatabaseProvider @Inject constructor() {
             ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val userDataModel = dataSnapshot.getValue(UserDataModel::class.java)
-                var premiumStatus = (dataSnapshot.child("isPremium"))
+//                var premiumStatus = (dataSnapshot.child("isPremium"))
                 if (userDataModel != null) {
-                    userDataModel.isPremium = premiumStatus.value.toString().toBoolean()
+                    println(userDataModel)
                     deferred.complete(userDataModel)
                 } else {
                     deferred.completeExceptionally(Exception("Failed to retrieve user data"))
@@ -116,6 +201,9 @@ class DatabaseProvider @Inject constructor() {
 
 
     fun buyCoins(user: UserDataModel, coin: MarketCoinModel, quantity: Int): Boolean {
+
+
+
         println(user?.isPremium.toString() + "ja sam debil")
         val totalCost = coin.currentPrice * quantity
         return if (user.currency!! >= totalCost) {

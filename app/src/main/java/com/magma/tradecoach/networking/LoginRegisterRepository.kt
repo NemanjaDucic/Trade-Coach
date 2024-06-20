@@ -37,6 +37,8 @@ class LoginRegisterRepository @Inject constructor() {
                         singleton.saveBool(Constants.LOGGED_KEY, true)
                         Utils.intent(c, MainActivity::class.java, null)
                     } else {
+                        Toast.makeText(c, "Login failed: ${authResult.exception?.message}", Toast.LENGTH_LONG).show()
+
                         cont.resume(Result.failure(Throwable(authResult.exception)))
                     }
                 }
@@ -56,10 +58,11 @@ suspend fun register(username: String, country: String, email: String, password:
 
         if (result.user != null) {
             val uid = result.user?.uid
-            println(uid)
-            val user = UserDataModel(username =username,uid= uid, emailAddress = email,country = country, currency =  100.0)
+
+            val user = UserDataModel(username =username,uid= uid, emailAddress = email,country = country, currency =  100.000)
             uid?.let { reference.child(it).setValue(user) }
             singleton.saveBool(Constants.LOGGED_KEY, true)
+            singleton.saveString("id", uid.toString())
             val intent = Intent(c, MainActivity::class.java)
             c.startActivity(intent)
 

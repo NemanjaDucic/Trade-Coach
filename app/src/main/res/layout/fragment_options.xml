@@ -32,7 +32,6 @@
         android:layout_marginTop="@dimen/_10sdp"
         />
     <ImageView
-
         android:id="@+id/imageg2"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="@dimen/_30sdp"
@@ -40,14 +39,14 @@
         android:src="@drawable/coin"
         android:scaleType="fitXY"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/whiteText"
+        app:layout_constraintStart_toEndOf="@id/coinText"
+        app:layout_constraintEnd_toStartOf="@id/whiteText2"
         app:layout_constraintTop_toBottomOf="@id/imageg"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/imageg2"
-        app:layout_constraintEnd_toStartOf="@id/imgCoin"
+       app:layout_constraintEnd_toEndOf="parent"
         android:fontFamily="@font/intersemibold"
         app:layout_constraintTop_toBottomOf="@id/whiteText"
         android:id="@+id/whiteText2"
@@ -59,6 +58,7 @@
       android:layout_marginTop="@dimen/_30sdp"
         />
     <ImageView
+
         android:id="@+id/imgCoin"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_width="@dimen/_30sdp"
@@ -66,14 +66,16 @@
         android:src="@drawable/coin"
         app:layout_constraintEnd_toStartOf="@id/coinText"
         android:scaleType="fitXY"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/whiteText2"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toBottomOf="@id/imageg"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/imageg2"
         app:layout_constraintStart_toEndOf="@id/imgCoin"
-        app:layout_constraintEnd_toEndOf="parent"
+
         android:fontFamily="@font/intersemibold"
         app:layout_constraintTop_toBottomOf="@id/whiteText"
         android:id="@+id/coinText"

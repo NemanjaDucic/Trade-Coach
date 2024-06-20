@@ -100,7 +100,7 @@ abstract class BaseFragment: Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 val newText = s.toString()
-                if (newText.isEmpty()) {
+                if (newText.isEmpty() || newText == null) {
                     return
                 } else {
                     val ss = String.format("%.3f",newText.toDouble() * coinInfoModel.currentPrice)
@@ -125,14 +125,20 @@ abstract class BaseFragment: Fragment() {
         userMagmaCoins.text = String.format("%.6f",user.currency)
         coinsValueComparedToMagma.text = "1"
         mainButton.setOnClickListener {
-                    if(DatabaseProvider().buyCoins(viewModel.currentUser.value!!, coinInfoModel,editTextView.text.toString().toInt())){
-            Toast.makeText(getMainActivity(),"Successfully bought ${editTextView.text} ${coinInfoModel.name}(s)",Toast.LENGTH_SHORT).show()
-                        viewModel.getUserData()
-                        bottomSheetDialog.dismiss()
-        } else {
-            Toast.makeText(getMainActivity(),"Purchase Failed",Toast.LENGTH_SHORT).show()
-                        bottomSheetDialog.dismiss()
-        }
+                    if (editTextView.text.isNotEmpty()){
+                        if(DatabaseProvider().buyCoins(viewModel.currentUser.value!!, coinInfoModel,editTextView.text.toString().toInt())){
+                            Toast.makeText(getMainActivity(),"Successfully bought ${editTextView.text} ${coinInfoModel.name}(s)",Toast.LENGTH_SHORT).show()
+                            viewModel.getUserData()
+                            viewModel.updateNumberOfTransactions()
+                            bottomSheetDialog.dismiss()
+                        } else {
+                            Toast.makeText(getMainActivity(),"Purchase Failed",Toast.LENGTH_SHORT).show()
+                            bottomSheetDialog.dismiss()
+                        }
+                    } else {
+                        Toast.makeText(activity,"Please Enter Number",Toast.LENGTH_SHORT).show()
+                    }
+
 
         }
         xButton.setOnClickListener {
@@ -170,7 +176,7 @@ abstract class BaseFragment: Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
                 val newText = s.toString()
-                if (newText.isEmpty()) {
+                if (newText.isEmpty() || newText == null) {
                     return
                 } else {
 
@@ -195,12 +201,18 @@ abstract class BaseFragment: Fragment() {
 
 
         mainButton.setOnClickListener {
+            if (editTextView.text.isEmpty()){
+                Toast.makeText(activity,"Please Enter Number",Toast.LENGTH_SHORT).show()
+
+            } else {
             val amountToSell = editTextView.text.toString().toIntOrNull()
             if (amountToSell != null && amountToSell > 0) {
             if (availableCoins < amountToSell) {
                 Toast.makeText(getMainActivity(), "Not Enough Coins", Toast.LENGTH_SHORT).show()
             } else {
                 DatabaseProvider().sellCoins(viewModel.currentUser.value!!,coinInfoModel,amountToSell!!,sellCoinsCallback)
+                viewModel.updateNumberOfTransactions()
+
                 viewModel.getUserData().let {
                     sellAdapter.setData(viewModel.currentUser.value?.coins?.values?.toTypedArray()!!)
                     sellAdapter.notifyDataSetChanged()
@@ -209,6 +221,7 @@ abstract class BaseFragment: Fragment() {
 
             }
          }
+            }
         }
         xButton.setOnClickListener {
             bottomSheetDialog.dismiss()

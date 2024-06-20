@@ -41,7 +41,7 @@ class AddServices {
                 OnUserEarnedRewardListener { rewardItem ->
 
                     database.rewardMagmaCoins(5.00)
-
+                    database.updateAddsWatched()
                     println("User earned the reward.")
                 }
             )

@@ -1,6 +1,8 @@
 package com.magma.tradecoach.ui.segmentIntro
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.magma.tradecoach.databinding.ActivityLoginBinding
@@ -27,7 +29,15 @@ class LoginActivity:AppCompatActivity() {
             Utils.intent(this, RegisterActivity::class.java)
         }
         binding.imageButton.setOnClickListener {
-            viewModel.login(Utils.getETText(binding.emailadressET),Utils.getETText(binding.passwordET),this)
+            if (binding.passwordET.text.isNotEmpty() && binding.emailadressET.text.isNotEmpty()) {
+                viewModel.login(Utils.getETText(binding.emailadressET),Utils.getETText(binding.passwordET),this)
+            } else {
+                Toast.makeText(this, "You must enter Password and Email", Toast.LENGTH_LONG).show()
+
+            }
+        }
+        binding.forgotpasswordTV.setOnClickListener {
+            startActivity(Intent(this,ForgotPasswordActivity::class.java))
         }
     }
 }

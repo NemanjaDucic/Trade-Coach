@@ -2,17 +2,125 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_margin="@dimen/_10sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="@font/interbold"
+        android:id="@+id/ad_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/_20sdp"
+        android:id="@+id/infoHolder"
+        app:layout_constraintTop_toBottomOf="@id/ad_view_container"
+        app:layout_constraintHeight_percent="0.14">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:text="NAME:"
+            android:fontFamily="@font/interregular"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/phoneTV"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:fontFamily="@font/interregular"
+                android:textSize="18sp"
+                android:text="phonenumber!"/>
+
+            <com.hbb20.CountryCodePicker
+                android:layout_gravity="end"
+                android:id="@+id/flagImg"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+<LinearLayout
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/infoHolder"
+    android:layout_width="0dp"
+    android:padding="@dimen/_10sdp"
+    android:orientation="vertical"
+    android:layout_height="0dp"
+    >
+    <ImageView
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:id="@+id/separator_image"
+        android:src="@drawable/between_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ad_view_container"/>
+    <TextView
+        android:id="@+id/tvTop"
         android:textColor="@color/white"
-        android:textSize="26sp"
-        android:textAlignment="center"
-        android:layout_margin="@dimen/_16sdp"
-        android:text="@string/dedication"/>
+        android:layout_width="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:fontFamily="@font/interregular"
+        android:text="Number of Logins:"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_logins"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tvMid"
+        android:layout_margin="@dimen/_10sdp"
+
+        android:textColor="@color/white"
+        android:text="Ads watched:"
+
+        android:layout_width="wrap_content"
+        android:fontFamily="@font/interregular"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_ads"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tvBot"
+        android:layout_margin="@dimen/_10sdp"
+
+        android:text="Number of transactions:"
+
+        android:textColor="@color/white"
+        android:fontFamily="@font/interregular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_trans"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

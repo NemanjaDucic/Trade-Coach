@@ -16,7 +16,7 @@
         android:layout_height="0dp">
         <TextView
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/_5sdp"
             android:layout_marginStart="@dimen/_8sdp"
             android:id="@+id/nameTV"
@@ -25,14 +25,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="fakkfslhjafk"
-            android:paddingTop="@dimen/_8sdp"
+
             android:fontFamily="@font/interregular"
             android:textColor="@color/white"
             android:textAlignment="viewStart"/>
         <TextView
             android:id="@+id/pointsTV"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_marginEnd="@dimen/_8sdp"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,6 @@
             android:text="holder"
             android:fontFamily="@font/interregular"
 
-            android:paddingTop="10dp"
             android:textColor="@color/white"
             android:textAlignment="viewEnd"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

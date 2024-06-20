@@ -14,4 +14,5 @@ class UserRepository @Inject constructor(){
 
         return sortedCoins as ArrayList<CoinModel>
     }
+
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.magma.tradecoach.adds.AddServices
 import com.magma.tradecoach.databinding.FragmentHomeBinding
@@ -55,6 +56,7 @@ private fun init() {
                 setFragment(getMainActivity(),CurrenciesFragment(),2)
             }
             buttonBonusCons.setOnClickListener {
+                Toast.makeText(requireActivity(),"Add Will Begin Shortly",Toast.LENGTH_SHORT).show()
                 AddServices().loadRewardedAd(getMainActivity())
 
 
@@ -84,8 +86,7 @@ private fun init() {
             dateDotText.text = user?.streak.toString()
             titleTV.text = "Balanse: " + String.format("%.3f",user?.currency)
             usernameTV.text = user?.username
-            println(user?.isPremium)
-            println(user?.uid)
+
         }
 
     }

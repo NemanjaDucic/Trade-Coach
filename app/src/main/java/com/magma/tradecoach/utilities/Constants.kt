@@ -16,6 +16,7 @@ object Constants {
       const val LAST_LOGIN_DAY = "last_login_day"
       const val CONSECUTIVE_DAYS = "num_consecutive_days"
       const val ONE = 1
+      const val TEST_BANNER_AD_ID = "ca-app-pub-3940256099942544/9214589741"
 
       const val MAGMA_PACK_ID_250 = "product_id_250"
       const val MAGMA_PACK_ID_500 = "product_id_500"
