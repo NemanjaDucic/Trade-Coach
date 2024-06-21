@@ -24,7 +24,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:text="@string/create_post"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/_12sdp"
             android:fontFamily="@font/intersemibold"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -47,8 +47,8 @@
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
             android:id="@+id/icClose"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_26sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="@dimen/_8sdp"
@@ -66,7 +66,7 @@
             android:fontFamily="@font/intermedium"
             android:layout_margin="@dimen/_8sdp"
             android:textAlignment="center"
-            android:textSize="24sp"/>
+            android:textSize="@dimen/_22sdp"/>
         <EditText
 
             android:id="@+id/titleTV"
@@ -116,6 +116,6 @@
             android:text="Publish"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="25sp"/>
+            android:textSize="@dimen/_22sdp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

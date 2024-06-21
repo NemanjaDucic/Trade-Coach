@@ -6,9 +6,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.magma.tradecoach.databinding.ActivityLoginBinding
-import com.magma.tradecoach.utilities.Constants
-import com.magma.tradecoach.utilities.PrefSingleton
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.getTextTrimmed
+import com.magma.tradecoach.ext.startActivityWithExtras
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,11 +25,11 @@ class LoginActivity:AppCompatActivity() {
 
     private fun listeners(){
         binding.registerbotTV.setOnClickListener {
-            Utils.intent(this, RegisterActivity::class.java)
+          this.startActivityWithExtras(RegisterActivity::class.java)
         }
         binding.imageButton.setOnClickListener {
             if (binding.passwordET.text.isNotEmpty() && binding.emailadressET.text.isNotEmpty()) {
-                viewModel.login(Utils.getETText(binding.emailadressET),Utils.getETText(binding.passwordET),this)
+                viewModel.login(binding.emailadressET.getTextTrimmed(),binding.passwordET.getTextTrimmed(),this)
             } else {
                 Toast.makeText(this, "You must enter Password and Email", Toast.LENGTH_LONG).show()
 

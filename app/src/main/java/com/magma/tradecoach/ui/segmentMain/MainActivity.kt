@@ -2,10 +2,14 @@ package com.magma.tradecoach.ui.segmentMain
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.google.gson.Gson
 import com.magma.tradecoach.R
 import com.magma.tradecoach.databinding.ActivityMainBinding
@@ -15,6 +19,7 @@ import com.magma.tradecoach.ui.fragments.currencies.CurrenciesFragment
 import com.magma.tradecoach.ui.fragments.dedication.DedicationFragment
 import com.magma.tradecoach.ui.fragments.home.HomeFragment
 import com.magma.tradecoach.utilities.ConsecutiveDayChecker
+import com.magma.tradecoach.utilities.Constants
 import com.magma.tradecoach.utilities.PrefSingleton
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +28,23 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
+    private lateinit var adView: AdView
+    private val adSize: AdSize
+        get() {
+            val display = this?.windowManager?.defaultDisplay
+            val outMetrics = DisplayMetrics()
+            display?.getMetrics(outMetrics)
 
+            val density = outMetrics.density
+
+            var adWidthPixels = binding.bubbleTabBar.width.toFloat()
+            if (adWidthPixels == 0f) {
+                adWidthPixels = outMetrics.widthPixels.toFloat()
+            }
+
+            val adWidth = (adWidthPixels / density).toInt()
+            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(this, adWidth)
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -61,6 +82,7 @@ class MainActivity : AppCompatActivity() {
         this.onBackPressedDispatcher.addCallback(this) {
             supportFragmentManager.popBackStack()
         }
+    preloadAdd()
     }
 
     private fun updateUIWithData(data: List<MarketCoinModel>) {
@@ -69,7 +91,19 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.fragmentContainer, HomeFragment())
             .commit()
     }
+   private  fun preloadAdd(){
+        adView = AdView(this)
+        adView.setAdSize(adSize)
+        adView.adUnitId = Constants.TEST_BANNER_AD_ID
 
+        // Create an ad request to load the ad
+        val adRequest = AdRequest.Builder().build()
 
+        // Preload the ad
+        adView.loadAd(adRequest)
+    }
+    fun getAdView(): AdView {
+        return adView
+    }
 
 }

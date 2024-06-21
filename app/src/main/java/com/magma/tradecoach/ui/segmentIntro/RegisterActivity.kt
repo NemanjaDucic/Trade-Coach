@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.magma.tradecoach.databinding.ActivityRegisterBinding
 import com.magma.tradecoach.ext.stringText
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.startActivityWithExtras
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,7 +51,7 @@ class RegisterActivity:AppCompatActivity() {
         }
 
         binding.loginTV.setOnClickListener {
-            Utils.intent(this, LoginActivity::class.java)
+            this.startActivityWithExtras(LoginActivity::class.java)
         }
     }
 }

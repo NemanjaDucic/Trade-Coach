@@ -8,23 +8,32 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.magma.tradecoach.R
+import com.magma.tradecoach.model.UserDataModel
 import com.magma.tradecoach.model.UserWithCombinedValue
 
 class LeaderboardAdapter (
-    var items :ArrayList<UserWithCombinedValue>
+    var items :List<UserDataModel>
 ) : RecyclerView.Adapter<LeaderboardAdapter.ViewHolder>() {
-    var rankPos = arrayListOf("1","2","3")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_leaderboard, parent, false)
         return ViewHolder(view)
     }
-
+    var mode = "Login"
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.d("LeaderboardAdapter", "Binding item at position $position: ${items[position].username}")
 
-        holder.rank.text = rankPos[position]
+
+        holder.rank.text = (position + 4).toString()
         holder.name.text = items[position].username
-        holder.points.text = getFormatedString(items[position].combinedValue)
+        if (mode == "Login"){
+            holder.points.text = items[position].streak.toString()
+        } else if (mode == "Ads"){
+            holder.points.text = items[position].addsWatched.toString()
+
+        } else {
+            holder.points.text = items[position].transactionsCompleted.toString()
+
+        }
     }
 
     override fun getItemCount(): Int {
@@ -38,7 +47,7 @@ class LeaderboardAdapter (
     }
 
 
-    fun setData(data: ArrayList<UserWithCombinedValue>) {
+    fun setData(data: List<UserDataModel>) {
         Log.d("LeaderboardAdapter", "Setting data: ${data.size} items")
 
         items = data

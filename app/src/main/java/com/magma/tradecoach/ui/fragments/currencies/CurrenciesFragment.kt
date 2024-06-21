@@ -24,7 +24,11 @@ import com.magma.tradecoach.model.MarketCoinModel
 import com.magma.tradecoach.networking.DataRepository
 import com.magma.tradecoach.ui.fragments.home.HomeFragment
 import com.magma.tradecoach.utilities.BaseFragment
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.animateAppear
+import com.magma.tradecoach.ext.animateFromBottom
+import com.magma.tradecoach.ext.animateToBottom
+import com.magma.tradecoach.ext.setFragment
+import com.magma.tradecoach.ext.setup
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,10 +51,10 @@ class CurrenciesFragment :BaseFragment(),CurrencyListener,MyCoinClickedInterface
     }
     private fun  init(){
         getMainActivity().onBackPressedDispatcher.addCallback(this) {
-           Utils.setFragment(requireActivity(),HomeFragment(),0)
+            activity?.setFragment(HomeFragment(),0)
         }
         myCurrAdapter = CurrenciesAdapter(arrayListOf(),this)
-        Utils.setRecycler(binding.currenciesRV,myCurrAdapter)
+        binding.currenciesRV.setup(requireContext(),myCurrAdapter)
         DataRepository.coinsData()?.let { myCurrAdapter.setData(it) }
         listeners()
         viewModel.getCoins()
@@ -125,11 +129,12 @@ class CurrenciesFragment :BaseFragment(),CurrencyListener,MyCoinClickedInterface
     private fun setMenuState(isActive: Boolean) {
         when (isActive) {
             true -> {
-                Utils.animateViewFromBottom(binding.buttonsContainer)
-                Utils.animateViewAppear(binding.blurView)
+                binding.buttonsContainer.animateFromBottom(500)
+                binding.blurView.animateAppear(500)
+
             }
             false -> {
-                Utils.animateViewToBottom(binding.buttonsContainer)
+                binding.buttonsContainer.animateToBottom(500)
                 binding.blurView.isVisible = false
             }
         }

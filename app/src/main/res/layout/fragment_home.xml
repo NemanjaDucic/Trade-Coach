@@ -69,7 +69,7 @@
         android:padding="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_5sdp"
         android:fontFamily="@font/interregular"
-        android:textSize="18sp"
+        android:textSize="@dimen/_16sdp"
         android:id="@+id/loginDayText"
         app:layout_constraintBottom_toBottomOf="parent"
         android:text="Trade coach streak"
@@ -77,7 +77,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:textSize="18sp"
+        android:textSize="@dimen/_16sdp"
 
         app:layout_constraintEnd_toStartOf="@id/dateDotText"
         app:layout_constraintTop_toTopOf="parent"
@@ -96,7 +96,7 @@
         android:text="1"
         android:textAlignment="center"
         android:paddingTop="@dimen/_5sdp"
-        android:textSize="18sp"
+        android:textSize="@dimen/_16sdp"
         android:fontFamily="@font/interbold"
         android:layout_height="@dimen/_30sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +127,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="8dp"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/_16sdp"
             android:id="@+id/visitTV"
             android:fontFamily="@font/interbold"/>
         <androidx.recyclerview.widget.RecyclerView
@@ -169,7 +169,7 @@
                 android:layout_marginStart="@dimen/_8sdp"
                 android:src="@drawable/gift_ico"
                 android:id="@+id/giftImg"
-                android:layout_margin="@dimen/_8sdp"
+                android:layout_margin="@dimen/_5sdp"
                 app:layout_constraintEnd_toStartOf="@id/getBounusTexxt"
 
                 app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +186,7 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:text="Get Bonus"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="@dimen/_12sdp"
                 android:fontFamily="@font/intersemibold"/>
                 <ImageView
                     android:id="@+id/adLeft"
@@ -232,7 +232,7 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:text="Check in"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="@dimen/_12sdp"
                 android:fontFamily="@font/intersemibold"/>
             <ImageView
                 android:layout_width="@dimen/_15sdp"

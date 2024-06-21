@@ -3,6 +3,7 @@ package com.magma.tradecoach.adds
 import android.app.Activity
 import android.content.ContentValues
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
@@ -47,7 +48,7 @@ class AddServices {
             )
         }
     }
-     fun loadRewardedAd(activity: Activity) {
+     fun loadRewardedAd(activity: Activity,dialog:AlertDialog) {
         if (rewardedAd == null) {
             val adRequest = AdRequest.Builder().build()
 
@@ -58,12 +59,14 @@ class AddServices {
                 object : RewardedAdLoadCallback() {
                     override fun onAdFailedToLoad(adError: LoadAdError) {
                         println(adError?.message)
+                        dialog.dismiss()
                         rewardedAd = null
                     }
 
                     override fun onAdLoaded(ad: RewardedAd) {
                         Log.d(ContentValues.TAG, "Ad was loaded.")
                         rewardedAd = ad
+                        dialog.dismiss()
                         showRewardedVideo(activity)
                     }
                 }

@@ -17,7 +17,8 @@ import com.magma.tradecoach.model.ChatMessage
 import com.magma.tradecoach.ui.fragments.community.chat.ChatViewHolder
 import com.magma.tradecoach.utilities.Constants
 import com.magma.tradecoach.utilities.PrefSingleton
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.setAvatarInitials
+import com.magma.tradecoach.ext.splitTime
 
 class ChatViewModel: ViewModel() {
     val observeAdapter = MutableLiveData<FirebaseRecyclerAdapter<ChatMessage, ChatViewHolder>>()
@@ -51,7 +52,7 @@ class ChatViewModel: ViewModel() {
                 model: ChatMessage
             ) {
                 val messageText = model.text
-                val messageTime = model.time?.let { Utils.splitTime(it) }
+                val messageTime = model.time?.let { it.splitTime() }
                 val messageSenderID = model.sender
                 val messageSenderName = model.senderName
                 if (messageSenderID == PrefSingleton.instance.getString("id")) {
@@ -67,7 +68,7 @@ class ChatViewModel: ViewModel() {
                     viewHolder.tvTheirUsername.text = messageSenderName
                     viewHolder.tvTheirText.text = messageText
                     viewHolder.tvTheirTime.text = messageTime
-                    messageSenderName?.let { Utils.setAvatarInitials(it, viewHolder.iTheirImage) }
+                    messageSenderName?.let { viewHolder.iTheirImage.setAvatarInitials(it) }
                 }
             }
 

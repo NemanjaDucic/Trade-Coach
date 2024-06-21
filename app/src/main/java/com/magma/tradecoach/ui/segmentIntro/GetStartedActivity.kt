@@ -3,7 +3,7 @@ package com.magma.tradecoach.ui.segmentIntro
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.magma.tradecoach.databinding.ActivityGetStartedBinding
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.startActivityWithExtras
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,16 +16,16 @@ class GetStartedActivity:AppCompatActivity() {
         binding = ActivityGetStartedBinding.inflate(layoutInflater)
         setContentView(binding.root)
         listeners()
-        Utils.intent(this, WelcomeActivity::class.java)
+        this.startActivityWithExtras(WelcomeActivity::class.java)
 
     }
 
     private fun listeners() {
         binding.getStartedButton.setOnClickListener {
-            Utils.intent(this, WelcomeActivity::class.java)
+            this.startActivityWithExtras(WelcomeActivity::class.java)
         }
         binding.loginButton.setOnClickListener {
-            Utils.intent(this, LoginActivity::class.java)
+            this.startActivityWithExtras(LoginActivity::class.java)
         }
     }
 }

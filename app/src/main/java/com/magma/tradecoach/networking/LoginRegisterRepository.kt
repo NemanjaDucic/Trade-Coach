@@ -11,7 +11,7 @@ import com.magma.tradecoach.ui.segmentMain.MainActivity
 import com.magma.tradecoach.model.UserDataModel
 import com.magma.tradecoach.utilities.Constants
 import com.magma.tradecoach.utilities.PrefSingleton
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.startActivityWithExtras
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
@@ -35,7 +35,7 @@ class LoginRegisterRepository @Inject constructor() {
                         }
 
                         singleton.saveBool(Constants.LOGGED_KEY, true)
-                        Utils.intent(c, MainActivity::class.java, null)
+                        c.startActivityWithExtras(MainActivity::class.java, null)
                     } else {
                         Toast.makeText(c, "Login failed: ${authResult.exception?.message}", Toast.LENGTH_LONG).show()
 

@@ -2,6 +2,7 @@ package com.magma.tradecoach.utilities
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.google.firebase.database.FirebaseDatabase
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -10,7 +11,7 @@ import java.util.Date
 class ConsecutiveDayChecker(private val context: Context) {
 
     private var preferences = PrefSingleton.instance
-
+    private val constants = Constants
     @SuppressLint("SimpleDateFormat")
     fun onUserLogin(userId: String) {
         val dateFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
@@ -25,15 +26,12 @@ class ConsecutiveDayChecker(private val context: Context) {
             incrementDays(userId)
         } else {
             if (lastLoginDay == today) {
-                Utils.didShowLogin = true
-                // User logged in the same day, do nothing
+                constants.didShowLogin = true
             } else if (lastLoginDay == yesterday) {
-                // User logged in consecutive days, add 1
-                Utils.didShowLogin = false
+                constants.didShowLogin = false
                 updateLastLoginDate(today)
                 incrementDays(userId)
             } else {
-                // It's been more than a day user logged in, reset the counter to 1
                 updateLastLoginDate(today)
                 resetDays(userId)
             }
@@ -55,22 +53,30 @@ class ConsecutiveDayChecker(private val context: Context) {
     private fun incrementDays(userId: String) {
         val days = getConsecutiveDays(userId) + Constants.ONE
         updateConsecutiveDays(userId, days)
-        Utils.updateFirebaseUserData(userId, days)
+       updateFirebaseUserData(userId, days)
     }
 
     private fun resetDays(userId: String) {
         updateConsecutiveDays(userId, Constants.ONE)
-        // Add your logic to update Firebase user data here
-        Utils.updateFirebaseUserData(userId, Constants.ONE)
+        updateFirebaseUserData(userId, Constants.ONE)
     }
 
     private fun updateConsecutiveDays(userId: String, days: Int) {
-        // Update local preferences
         preferences.saveInt(Constants.CONSECUTIVE_DAYS, days)
     }
 
     private fun getConsecutiveDays(userId: String): Int {
         return preferences.getInt(Constants.CONSECUTIVE_DAYS)
+    }
+   private fun updateFirebaseUserData(userId: String, consecutiveDays: Int) {
+        val databaseRef = FirebaseDatabase.getInstance().reference
+        databaseRef.child("users").child(userId).child("streak").setValue(consecutiveDays)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                } else {
+                    println("Firebase" +  "Error updating streak in Firebase")
+                }
+            }
     }
 
 }

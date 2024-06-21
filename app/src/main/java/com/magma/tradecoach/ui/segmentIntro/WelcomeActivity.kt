@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.magma.tradecoach.adapters.WelcomePagerAdapter
 import com.magma.tradecoach.databinding.ActivityWelcomeBinding
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.startActivityWithExtras
 
 class WelcomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWelcomeBinding
@@ -26,7 +26,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.btNextWelcome.setOnClickListener {
             if (binding.viewPagerWelcome.currentItem == 2)
-              Utils.intent(this, RegisterActivity::class.java,null)
+         this.startActivityWithExtras(RegisterActivity::class.java,null)
             else binding.viewPagerWelcome.currentItem = binding.viewPagerWelcome.currentItem + 1
         }
 

@@ -10,8 +10,7 @@ class PrefSingleton {
         BaseApplication.applicationContext().getSharedPreferences("main", Context.MODE_PRIVATE)
 
     companion object {
-        private const val DEFAULT_INT_VALUE = 0
-        private const val DEFAULT_STRING_VALUE = ""
+
 
         @JvmStatic
         val instance: PrefSingleton by lazy { PrefSingleton() }
@@ -44,9 +43,7 @@ class PrefSingleton {
         e.apply()
     }
 
-    fun getBool(key: String): Boolean {
-        return preferences.getBoolean(key, false)
-    }
+
     fun isLogged(): Boolean {
         return preferences.getBoolean(Constants.LOGGED_KEY,false)
     }

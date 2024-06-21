@@ -176,6 +176,34 @@ class DatabaseProvider @Inject constructor() {
             }
         })
     }
+    fun fetchAllUsers(completion: (List<UserDataModel>?, error: String?) -> Unit) {
+        val database = FirebaseDatabase.getInstance()
+        val reference = database.getReference("users")
+
+        reference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val users = mutableListOf<UserDataModel>()
+
+                dataSnapshot.children.forEach { userSnapshot ->
+                    try {
+                        val user = userSnapshot.getValue(UserDataModel::class.java)
+                        user?.let { users.add(it) }
+                    } catch (e: Exception) {
+                        // Log the exception and the raw data that caused the issue
+                        Log.e("FirebaseError", "Error deserializing user: ${userSnapshot.value}", e)
+                    }
+                }
+
+                completion(users, null)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Call completion with error message
+                completion(null, "Error: ${databaseError.message}")
+            }
+        })
+    }
+
     private fun getUserAsync(): Deferred<UserDataModel> {
         val deferred = CompletableDeferred<UserDataModel>()
         databaseRef.child("users").child(SessionManager.getId()).addListenerForSingleValueEvent(object :

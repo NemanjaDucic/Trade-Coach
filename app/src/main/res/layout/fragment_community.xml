@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/interbold"
         android:textColor="@color/white"
-        android:textSize="26sp"
+        android:textSize="@dimen/_23sdp"
         android:id="@+id/title"
         android:textAlignment="center"
         android:layout_margin="20dp"
@@ -33,8 +33,8 @@
         app:bubbletab_icon_size="@dimen/_16sdp"
         android:layout_marginStart="@dimen/_38sdp"
         android:layout_marginEnd="@dimen/_38sdp"
-        app:bubbletab_title_size="16sp"
-        app:bubbletab_icon_padding="5sp"
+        app:bubbletab_title_size="@dimen/_14sdp"
+        app:bubbletab_icon_padding="@dimen/_3sdp"
         app:bubbletab_vertical_padding="@dimen/_8sdp"
         app:bubbletab_tab_corner_radius="@dimen/_20sdp"/>
 

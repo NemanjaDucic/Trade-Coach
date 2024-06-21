@@ -18,7 +18,7 @@
         android:layout_marginBottom="@dimen/_16sdp"
         android:text="@string/get_started"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="@dimen/_16sdp"
         android:fontFamily="@font/interregular"
         />
     <androidx.appcompat.widget.AppCompatButton
@@ -35,7 +35,7 @@
         android:layout_marginBottom="@dimen/_24sdp"
         android:text="@string/login"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="@dimen/_13sdp"
         android:fontFamily="@font/interregular"
         />
     <TextView
@@ -48,7 +48,7 @@
         android:text="Trade coach\n Learn and earn"
         android:textColor="@color/silver"
         android:textAlignment="center"
-        android:textSize="25sp"
+        android:textSize="@dimen/_22sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         android:fontFamily="@font/interregular"/>
     <ImageView

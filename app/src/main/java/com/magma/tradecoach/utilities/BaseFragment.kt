@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.magma.tradecoach.R
 import com.magma.tradecoach.adapters.ConsecutiveDaysAdapter
 import com.magma.tradecoach.adapters.MyPossessionsAdapter
+import com.magma.tradecoach.ext.setHorizontalAdapter
 import com.magma.tradecoach.interfaces.SellCoinsCallback
 import com.magma.tradecoach.model.MarketCoinModel
 import com.magma.tradecoach.model.UserDataModel
@@ -256,7 +257,6 @@ abstract class BaseFragment: Fragment() {
     fun showConsecutiveDayLogin(descriptionText:String,consecutiveDay:Int) {
         val bottomSheetDialog = BottomSheetDialog(getMainActivity())
         val dialogView = layoutInflater.inflate(R.layout.fragment_consecutive_day_pop_up, null)
-
         val whiteText: TextView = dialogView.findViewById(R.id.whiteText)
         val xButton: Button = dialogView.findViewById(R.id.dismissButton)
         val descriptionGrayText: TextView = dialogView.findViewById(R.id.grayText)
@@ -267,8 +267,7 @@ abstract class BaseFragment: Fragment() {
         bottomSheetDialog.show()
         whiteText.text = "You started your trade coach streak!"
         descriptionGrayText.text = descriptionText
-
-        Utils.setRecyclerHorizontal(recyclerView,adapter)
+        recyclerView.setHorizontalAdapter(requireContext(),adapter)
         adapter.scrollToConsecutiveDay()
         mainButton.setOnClickListener {
             bottomSheetDialog.dismiss()

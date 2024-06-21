@@ -11,14 +11,13 @@ import com.magma.tradecoach.databinding.FragmentCommunityBinding
 import com.magma.tradecoach.ui.fragments.community.chat.ChatFragment
 import com.magma.tradecoach.ui.fragments.community.feed.FeedFragment
 import com.magma.tradecoach.ui.fragments.community.leaderboard.LeaderboardFragment
-import com.magma.tradecoach.utilities.Utils
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CommunityFragment: Fragment() {
     private lateinit var binding:FragmentCommunityBinding
-    private val viewModel:MainViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

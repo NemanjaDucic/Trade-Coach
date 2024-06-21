@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.magma.tradecoach.ui.segmentMain.MainActivity
 import com.magma.tradecoach.databinding.ActivitySplashBinding
 import com.magma.tradecoach.utilities.PrefSingleton
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.startActivityWithExtras
 import dagger.hilt.android.AndroidEntryPoint
 
 @SuppressLint("CustomSplashScreen")
@@ -31,7 +31,7 @@ class SplashActivity:AppCompatActivity() {
                 GetStartedActivity::class.java
             }
 
-            Utils.intent(this, targetActivity, null)
+            this.startActivityWithExtras(targetActivity, null)
         }, 1000)
     }
 

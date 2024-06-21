@@ -15,7 +15,9 @@ import com.magma.tradecoach.model.ChatMessage
 import com.magma.tradecoach.utilities.BaseFragment
 import com.magma.tradecoach.utilities.DatabaseProvider
 import com.magma.tradecoach.utilities.SessionManager
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.ext.animateButtonClick
+import com.magma.tradecoach.ext.getTextTrimmed
+import com.magma.tradecoach.ext.isEmpty
 import com.magma.tradecoach.viewmodel.ChatViewModel
 
 class ChatFragment: BaseFragment() {
@@ -59,11 +61,11 @@ class ChatFragment: BaseFragment() {
 
     private fun listeners() {
         binding.tSendMessage.setOnClickListener {
-            if (!Utils.isETEmpty(binding.eMessage)) {
-                val message = Utils.getETText(binding.eMessage)
-                DatabaseProvider().sendMessage(message,SessionManager.getId())
-                Utils.animateButtonClick(binding.tSendMessage)
+            if (!binding.eMessage.isEmpty()) {
+                val message = binding.eMessage.getTextTrimmed()
 
+                DatabaseProvider().sendMessage(message,SessionManager.getId())
+                binding.tSendMessage.animateButtonClick()
                 viewModel.displayChatMessage()
 
                 resetUI()

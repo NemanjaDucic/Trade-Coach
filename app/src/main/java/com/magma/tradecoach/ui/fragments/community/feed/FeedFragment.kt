@@ -15,7 +15,12 @@ import com.magma.tradecoach.interfaces.BlogPostClickedInterface
 import com.magma.tradecoach.model.BlogPostModel
 import com.magma.tradecoach.model.UserDataModel
 import com.magma.tradecoach.utilities.BaseFragment
-import com.magma.tradecoach.utilities.Utils
+import com.magma.tradecoach.utilities.Constants
+import com.magma.tradecoach.ext.animateAppear
+import com.magma.tradecoach.ext.animateFromBottom
+import com.magma.tradecoach.ext.animateToBottom
+import com.magma.tradecoach.ext.getTextTrimmed
+import com.magma.tradecoach.ext.setup
 import com.magma.tradecoach.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +43,7 @@ class FeedFragment:BaseFragment(),BlogPostClickedInterface {
 
     private fun init() {
         adapter = FeedAdapter(arrayListOf(),this)
-        Utils.setRecycler(binding.feedRV,adapter)
+        binding.feedRV.setup(requireContext(),adapter)
         viewModel.getUserData()
         viewModel.getPosts()
         with(viewModel){
@@ -57,7 +62,7 @@ class FeedFragment:BaseFragment(),BlogPostClickedInterface {
             viewModel.currentUser.observe(viewLifecycleOwner){
                 if (it == null) return@observe
 
-                if (Utils.isPremiumUser(it)){
+                if (viewModel.isUserPremium(it)){
                     showOverlay(true)
                 } else {
                     Toast.makeText(context, "Only Premium Users Can Create Posts", Toast.LENGTH_SHORT).show()
@@ -68,10 +73,12 @@ class FeedFragment:BaseFragment(),BlogPostClickedInterface {
         binding.publishButton.setOnClickListener {
             viewModel.currentUser.value?.emailAddress?.let { emailAddress ->
                 viewModel.createBlogPost(
-                    Utils.getETText(binding.titleTV), Utils.getETText(binding.contentTV),
+                    binding.titleTV.getTextTrimmed()
+                    , binding.contentTV.getTextTrimmed(),
                     emailAddress
                 ).let {
-                    Utils.animateViewToBottom(binding.createPostView)
+
+                    binding.createPostView.animateToBottom(500)
                     hideOverlay()
                     Toast.makeText(activity, "Post Created Successfully", Toast.LENGTH_SHORT).show()
                     viewModel.getPosts()
@@ -87,19 +94,19 @@ class FeedFragment:BaseFragment(),BlogPostClickedInterface {
 
     private fun showOverlay(toPost: Boolean) {
         val darkOverlay = activity?.findViewById<View>(R.id.darkOverlay)
-        Utils.animateViewFromBottom(binding.createPostView)
+        binding.createPostView.animateFromBottom(500)
 
         if (toPost) {
             binding.titleTV.setText("")
             binding.contentTV.setText("")
         }
+        darkOverlay?.animateAppear(500)
 
-        darkOverlay?.let { Utils.animateViewAppear(it) }
     }
 
     private fun hideOverlay(){
         val darkOverlay = activity?.findViewById<View>(R.id.darkOverlay)
-        Utils.animateViewToBottom(binding.createPostView)
+        binding.createPostView.animateToBottom(500)
         darkOverlay?.isVisible = false
         binding.createTitle.text = "Create Post"
         binding.publishButton.isVisible = true

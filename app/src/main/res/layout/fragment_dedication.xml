@@ -30,7 +30,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="@dimen/_18sdp"
             android:text="NAME:"
             android:fontFamily="@font/interregular"
             android:layout_height="wrap_content"/>
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:fontFamily="@font/interregular"
-                android:textSize="18sp"
+                android:textSize="@dimen/_16sdp"
                 android:text="phonenumber!"/>
 
             <com.hbb20.CountryCodePicker

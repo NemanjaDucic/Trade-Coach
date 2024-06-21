@@ -47,7 +47,7 @@
             android:layout_height="@dimen/_42sdp"
             android:text="@string/next"
             android:textColor="@color/white"
-            android:textSize="22sp"
+            android:textSize="@dimen/_19sdp"
             android:background="@drawable/button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -28,7 +28,8 @@ class MainViewModel @Inject constructor(
     //Login Data
     private var _loginLiveData = MutableLiveData<FirebaseUser?>()
     var loginLiveData = _loginLiveData as LiveData<FirebaseUser?>
-
+    private var _premiumUserLiveData = MutableLiveData<Boolean?>()
+    var premiumUserLiveData = _premiumUserLiveData as LiveData<Boolean?>
     private var _currentUser = MutableLiveData<UserDataModel?>()
     val currentUser: LiveData<UserDataModel?> = _currentUser
     private var _initialCurrencyListLiveData = MutableLiveData<List<MarketCoinModel>>()
@@ -50,8 +51,8 @@ class MainViewModel @Inject constructor(
     private var _combinedUsersLiveData = MutableLiveData<ArrayList<UserWithCombinedValue>?>()
     var combinedUsersLiveData = _combinedUsersLiveData as LiveData<ArrayList<UserWithCombinedValue>?>
 
-    private var _topUsersLiveData = MutableLiveData<ArrayList<UserDataModel>?>()
-    var topUsersLiveData = _topUsersLiveData as LiveData<ArrayList<UserDataModel>>
+    private var _topUsersLiveData = MutableLiveData<List<UserDataModel>?>()
+    var topUsersLiveData = _topUsersLiveData as LiveData<List<UserDataModel>>
     fun login(email: String, password: String, c: Context) {
         viewModelScope.launch(Dispatchers.IO) {
             loginRegisterRepository.login(email, password, c)
@@ -90,35 +91,21 @@ class MainViewModel @Inject constructor(
             _currentUser.postValue(databaseRepository.getUser())
         }
     }
-    fun getTopUsersCombined(){
-        viewModelScope.launch {
-            databaseRepository.fetchTopUsersWithCombinedValue { topUsers, error ->
-                if (error != null) {
-                    println("Error: $error")
-                } else {
-                    topUsers?.forEachIndexed { index, user ->
-                        _combinedUsersLiveData.postValue(topUsers as ArrayList<UserWithCombinedValue>?)
-                        println("Top ${index + 1} - Username: ${user.username}, Combined Value: ${user.combinedValue}")
-                    }
-                }
-            }        }
-    }
-
-//    fun buyCoins(
-//        user: UserDataModel, coin: MarketCoinModel, quantity: Int
-//    ) {
+//    fun getTopUsersCombined(){
 //        viewModelScope.launch {
-//            databaseRepository.buyCoins(user, coin, quantity)
-//        }
+//            databaseRepository.fetchTopUsersWithCombinedValue { topUsers, error ->
+//                if (error != null) {
+//                    println("Error: $error")
+//                } else {
+//                    topUsers?.forEachIndexed { index, user ->
+//                        _combinedUsersLiveData.postValue(topUsers as ArrayList<UserWithCombinedValue>?)
+//                        println("Top ${index + 1} - Username: ${user.username}, Combined Value: ${user.combinedValue}")
+//                    }
+//                }
+//            }        }
 //    }
 
-//    fun sellCoins(
-//        user: UserDataModel, coin: MarketCoinModel, quantity: Int
-//    ) {
-//        viewModelScope.launch {
-//            databaseRepository.sellCoins(user, coin, quantity)
-//        }
-//    }
+
     fun giveReward(magmaCoins:Double){
         viewModelScope.launch {
             databaseRepository.rewardMagmaCoins(magmaCoins)
@@ -151,11 +138,29 @@ class MainViewModel @Inject constructor(
             })
         }
     }
+    fun isUserPremium(user:UserDataModel):Boolean {
+        viewModelScope.launch {
+            userRepository.isPremiumUser(user)
+            _premiumUserLiveData.postValue(userRepository.isPremiumUser(user))
+        }
+        return (premiumUserLiveData ?: false) as Boolean
+    }
     fun updateAddsWatched(){
         databaseRepository.updateAddsWatched()
     }
     fun updateNumberOfTransactions(){
     databaseRepository.updateTransactiondByUser()
+    }
+    fun getUsers(){
+        viewModelScope.launch {
+            databaseRepository.fetchAllUsers{
+                users,error ->
+                println(users)
+                if (error == null){
+                    _topUsersLiveData.postValue(users)
+                }
+            }
+        }
     }
     fun getLeaderboard(){
         viewModelScope.launch {

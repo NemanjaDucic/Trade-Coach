@@ -14,5 +14,7 @@ class UserRepository @Inject constructor(){
 
         return sortedCoins as ArrayList<CoinModel>
     }
-
+    fun isPremiumUser(user:UserDataModel):Boolean{
+        return user.isPremium == true
+    }
 }

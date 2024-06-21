@@ -1,17 +1,22 @@
 package com.magma.tradecoach.ui.fragments.dedication
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import com.hbb20.CountryCodePicker
 import com.magma.tradecoach.R
 import com.magma.tradecoach.adapters.AdsAdapter
@@ -31,22 +36,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class DedicationFragment:BaseFragment() {
     private lateinit var binding:FragmentDedicationBinding
     private val viewModel: MainViewModel by viewModels()
-    private val adSize: AdSize
-        get() {
-            val display = activity?.windowManager?.defaultDisplay
-            val outMetrics = DisplayMetrics()
-            display?.getMetrics(outMetrics)
 
-            val density = outMetrics.density
-
-            var adWidthPixels = binding.adViewContainer.width.toFloat()
-            if (adWidthPixels == 0f) {
-                adWidthPixels = outMetrics.widthPixels.toFloat()
-            }
-
-            val adWidth = (adWidthPixels / density).toInt()
-            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireActivity(), adWidth)
-        }
+    private var isAdLoaded = false
 
     private lateinit var adView: AdView
     private lateinit var loginsAdapter: LoginsAdapter
@@ -83,16 +74,18 @@ class DedicationFragment:BaseFragment() {
             binding.phoneTV.text = user.emailAddress
             binding.flagImg.setCountryForNameCode(CountryUtils.getCountryCode(user.country!!))
 
+
         }
-        loadBanner()
-    }
-    private fun loadBanner() {
-        adView = AdView(requireActivity())
-        adView.setAdSize(adSize)
-        adView.adUnitId = Constants.TEST_BANNER_AD_ID
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
-        binding.adViewContainer.addView(adView)
+
+        adView = (getMainActivity()).getAdView()
+        if (adView.adSize != null && !isAdLoaded) {
+            binding.adViewContainer.addView(adView)
+            isAdLoaded = true
+        }
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        binding.adViewContainer.removeView(adView)
+    }
 }
